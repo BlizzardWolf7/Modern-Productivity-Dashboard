@@ -807,11 +807,178 @@
       background: rgba(102, 126, 234, 0.15);
     }
 
-    /* Settings */
-    #settingsBtn {
+    /* Global Search Modal */
+    #searchModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1004;
+    }
+
+    #searchModal.active {
+      display: flex;
+    }
+
+    .search-modal {
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .search-modal input[type="text"] {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      border: 2px solid var(--accent);
+      background: rgba(102, 126, 234, 0.05);
+      color: var(--text);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .search-modal input[type="text"]:focus {
+      outline: none;
+      background: rgba(102, 126, 234, 0.1);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    body.dark .search-modal input[type="text"] {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .search-results {
+      margin-bottom: 1.5rem;
+      min-height: 200px;
+      max-height: 450px;
+      overflow-y: auto;
+    }
+
+    .search-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text);
+      opacity: 0.6;
+    }
+
+    .search-no-results {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text);
+      opacity: 0.6;
+    }
+
+    .search-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .search-section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text);
+      opacity: 0.6;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .search-result-item {
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-left: 4px solid;
+    }
+
+    .search-result-item:hover {
+      background: rgba(102, 126, 234, 0.12);
+      transform: translateX(3px);
+    }
+
+    body.dark .search-result-item {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark .search-result-item:hover {
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    .search-result-item.task {
+      border-left-color: var(--accent);
+    }
+
+    .search-result-item.note {
+      border-left-color: #f59e0b;
+    }
+
+    .search-result-type {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 0.25rem;
+    }
+
+    .search-result-title {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+
+    .search-result-content {
+      font-size: 0.85rem;
+      opacity: 0.75;
+      color: var(--text);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .search-result-meta {
+      font-size: 0.75rem;
+      opacity: 0.5;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    .search-highlight {
+      background: rgba(255, 235, 59, 0.4);
+      font-weight: 600;
+      padding: 0 0.2rem;
+      border-radius: 3px;
+    }
+
+    body.dark .search-highlight {
+      background: rgba(255, 235, 59, 0.3);
+    }
+
+    /* Top Action Buttons */
+    .top-actions {
       position: fixed;
       top: 1.5rem;
       right: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      z-index: 100;
+    }
+
+    #searchBtn,
+    #settingsBtn {
       background: linear-gradient(135deg, var(--accent), #764ba2);
       color: #fff;
       border: none;
@@ -822,12 +989,16 @@
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      z-index: 100;
+    }
+
+    #searchBtn:hover,
+    #settingsBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
     }
 
     #settingsBtn:hover {
       transform: rotate(90deg) scale(1.1);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
     }
 
     #settingsModal {
@@ -1560,7 +1731,10 @@
   </style>
 </head>
 <body>
-  <button id="settingsBtn">⚙️</button>
+  <div class="top-actions">
+    <button id="searchBtn" title="Search">🔍</button>
+    <button id="settingsBtn" title="Settings">⚙️</button>
+  </div>
   <h1>My Productivity Dashboard</h1>
   <div id="greeting"></div>
 
@@ -1645,6 +1819,15 @@
         <span class="shortcut-description">Close modal</span>
         <div class="shortcut-keys">
           <span class="key">Esc</span>
+        </div>
+      </div>
+
+      <div class="shortcut-item">
+        <span class="shortcut-description">Search tasks & notes</span>
+        <div class="shortcut-keys">
+          <span class="key">Ctrl</span>
+          <span class="key-plus">+</span>
+          <span class="key">F</span>
         </div>
       </div>
 
@@ -1767,6 +1950,23 @@
         <button id="deleteListFromSettingsBtn" class="delete-list-btn">Delete List</button>
         <button id="cancelListSettingsBtn" class="cancel-list-btn">Cancel</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Global Search Modal -->
+  <div id="searchModal">
+    <div class="modal-content search-modal">
+      <h3>🔍 Search</h3>
+      <input type="text" id="searchInput" placeholder="Search tasks and notes..." autofocus />
+      
+      <div id="searchResults" class="search-results">
+        <div class="search-empty">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
+          <p>Type to search across all tasks and notes</p>
+        </div>
+      </div>
+      
+      <button id="closeSearchBtn" class="modal-close-btn">Close</button>
     </div>
   </div>
 
@@ -2315,6 +2515,195 @@
     // Initialize to-do lists
     loadTodoLists();
 
+    /* GLOBAL SEARCH */
+    const searchBtn = document.getElementById("searchBtn");
+    const searchModal = document.getElementById("searchModal");
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const closeSearchBtn = document.getElementById("closeSearchBtn");
+
+    // Open search modal
+    searchBtn.onclick = () => {
+      searchModal.classList.add("active");
+      setTimeout(() => searchInput.focus(), 100);
+    };
+
+    closeSearchBtn.onclick = () => {
+      searchModal.classList.remove("active");
+      searchInput.value = "";
+      searchResults.innerHTML = `
+        <div class="search-empty">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
+          <p>Type to search across all tasks and notes</p>
+        </div>
+      `;
+    };
+
+    searchModal.onclick = (e) => {
+      if (e.target === searchModal) {
+        searchModal.classList.remove("active");
+      }
+    };
+
+    // Search functionality
+    function performSearch(query) {
+      if (!query || query.trim().length === 0) {
+        searchResults.innerHTML = `
+          <div class="search-empty">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
+            <p>Type to search across all tasks and notes</p>
+          </div>
+        `;
+        return;
+      }
+
+      const searchTerm = query.toLowerCase();
+      let taskResults = [];
+      let noteResults = [];
+
+      // Search through tasks
+      todoLists.forEach(list => {
+        list.tasks.forEach((task, index) => {
+          const taskText = task.text.toLowerCase();
+          const taskNote = task.note ? task.note.toLowerCase() : "";
+          
+          if (taskText.includes(searchTerm) || taskNote.includes(searchTerm)) {
+            taskResults.push({
+              type: 'task',
+              listName: list.name,
+              listId: list.id,
+              listColor: list.color,
+              taskIndex: index,
+              title: task.text,
+              note: task.note,
+              done: task.done
+            });
+          }
+        });
+      });
+
+      // Search through notes
+      notes.forEach(note => {
+        const noteTitle = note.title.toLowerCase();
+        const noteContent = note.content.toLowerCase();
+        
+        if (noteTitle.includes(searchTerm) || noteContent.includes(searchTerm)) {
+          noteResults.push({
+            type: 'note',
+            id: note.id,
+            title: note.title,
+            content: note.content,
+            color: note.color
+          });
+        }
+      });
+
+      // Display results
+      if (taskResults.length === 0 && noteResults.length === 0) {
+        searchResults.innerHTML = `
+          <div class="search-no-results">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">😔</div>
+            <p>No results found for "${query}"</p>
+          </div>
+        `;
+        return;
+      }
+
+      let resultsHtml = '';
+
+      // Display task results
+      if (taskResults.length > 0) {
+        resultsHtml += `
+          <div class="search-section">
+            <div class="search-section-title">Tasks (${taskResults.length})</div>
+            ${taskResults.map(result => {
+              const highlightedTitle = highlightText(result.title, searchTerm);
+              const highlightedNote = result.note ? highlightText(result.note, searchTerm) : '';
+              const doneClass = result.done ? 'style="opacity: 0.6; text-decoration: line-through;"' : '';
+              
+              return `
+                <div class="search-result-item task" data-type="task" data-list-id="${result.listId}">
+                  <div class="search-result-type">Task ${result.done ? '• Completed' : ''}</div>
+                  <div class="search-result-title" ${doneClass}>${highlightedTitle}</div>
+                  ${highlightedNote ? `<div class="search-result-content" ${doneClass}>${highlightedNote}</div>` : ''}
+                  <div class="search-result-meta">From list: ${result.listName}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      // Display note results
+      if (noteResults.length > 0) {
+        resultsHtml += `
+          <div class="search-section">
+            <div class="search-section-title">Notes (${noteResults.length})</div>
+            ${noteResults.map(result => {
+              const highlightedTitle = highlightText(result.title || 'Untitled', searchTerm);
+              const highlightedContent = highlightText(result.content, searchTerm);
+              
+              return `
+                <div class="search-result-item note" data-type="note" data-note-id="${result.id}">
+                  <div class="search-result-type">Note • ${result.color}</div>
+                  <div class="search-result-title">${highlightedTitle}</div>
+                  <div class="search-result-content">${highlightedContent}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      searchResults.innerHTML = resultsHtml;
+
+      // Add click listeners to results
+      document.querySelectorAll('.search-result-item').forEach(item => {
+        item.addEventListener('click', () => {
+          handleSearchResultClick(item);
+        });
+      });
+    }
+
+    // Highlight search terms
+    function highlightText(text, search) {
+      if (!text) return '';
+      const regex = new RegExp(`(${search})`, 'gi');
+      return text.replace(regex, '<span class="search-highlight">$1</span>');
+    }
+
+    // Handle search result clicks
+    function handleSearchResultClick(item) {
+      const type = item.dataset.type;
+      
+      if (type === 'task') {
+        const listId = item.dataset.listId;
+        searchModal.classList.remove("active");
+        openListView(listId);
+      } else if (type === 'note') {
+        const noteId = item.dataset.noteId;
+        searchModal.classList.remove("active");
+        
+        // Find and open the note
+        const note = notes.find(n => n.id === noteId);
+        if (note) {
+          currentNoteId = noteId;
+          noteEditTitle.textContent = "Edit Note";
+          noteTitleInput.value = note.title;
+          noteContentInput.value = note.content;
+          selectedColor = note.color;
+          updateColorSelection();
+          deleteNoteBtn.style.display = "block";
+          noteEditModal.classList.add("active");
+        }
+      }
+    }
+
+    // Real-time search
+    searchInput.addEventListener("input", (e) => {
+      performSearch(e.target.value);
+    });
+
     /* SETTINGS */
     const settingsBtn = document.getElementById("settingsBtn");
     const modal = document.getElementById("settingsModal");
@@ -2411,12 +2800,20 @@
     document.addEventListener("keydown", (e) => {
       // Escape - Close any open modal
       if (e.key === "Escape") {
-        if (modal.classList.contains("active")) {
+        if (searchModal.classList.contains("active")) {
+          searchModal.classList.remove("active");
+        } else if (modal.classList.contains("active")) {
           modal.classList.remove("active");
-        }
-        if (shortcutsModal.classList.contains("active")) {
+        } else if (shortcutsModal.classList.contains("active")) {
           shortcutsModal.classList.remove("active");
         }
+      }
+
+      // Ctrl+F - Open search
+      if ((e.ctrlKey || e.metaKey) && e.key === "f") {
+        e.preventDefault();
+        searchModal.classList.add("active");
+        setTimeout(() => searchInput.focus(), 100);
       }
 
       // Ctrl+S - Open settings
@@ -2688,4 +3085,5 @@
   </script>
 </body>
 </html>
+
 

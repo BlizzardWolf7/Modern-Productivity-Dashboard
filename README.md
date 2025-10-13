@@ -60,9 +60,19 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - **Dark mode toggle** - Switch between light and dark themes
 - **Settings persistence** - All preferences saved locally
 
+### 🔍 **Global Search**
+- **Search across everything** - Find tasks and notes instantly
+- **Real-time results** - See matches as you type
+- **Keyword highlighting** - Search terms highlighted in yellow
+- **Smart categorization** - Results organized by Tasks and Notes
+- **Quick navigation** - Click any result to open it
+- **Completion status** - See if tasks are done or pending
+- **List context** - Shows which list each task belongs to
+- **Ctrl+F shortcut** - Quick access with keyboard
+
 ### ⌨️ **Keyboard Shortcuts**
 - **Dedicated shortcuts modal** - Beautiful guide with modern key visualizations
-- **5 productivity shortcuts** - Quick access to all features
+- **6 productivity shortcuts** - Quick access to all features
 - **Cross-platform support** - Works with Ctrl (Windows/Linux) and ⌘ (Mac)
 - **Instant access** - Press Ctrl+K to view shortcuts anytime
 
@@ -133,12 +143,17 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
    - You'll see a welcome toast notification
 
 2. **Customize Your Dashboard**:
-   - Click the ⚙️ settings icon in the top-right corner
+   - Click the ⚙️ settings icon in the top-right corner (or press Ctrl+S)
    - Set your dashboard title
    - Enter your name for personalized greeting
    - Choose your favorite accent color
    - Toggle dark mode if preferred
    - Click "Save" to apply changes
+
+3. **Search Your Content**:
+   - Click the 🔍 search icon (or press Ctrl+F)
+   - Type any keyword to search
+   - Click results to navigate to tasks or notes
 
 ### Using the Multi-List To-Do System
 
@@ -231,12 +246,42 @@ The dashboard automatically:
 - **Preview cards** - Quick overview in grid view
 - **Character limit** - Titles limited to 50 characters
 
+### Using Global Search
+
+The powerful search feature helps you find anything instantly:
+
+1. **Open Search**:
+   - Click the 🔍 icon in top-right corner
+   - Or press **Ctrl+F** (⌘+F on Mac)
+
+2. **Search**:
+   - Type any keyword
+   - Results appear instantly as you type
+   - Search covers:
+     - Task titles
+     - Task notes
+     - Note titles
+     - Note content
+
+3. **View Results**:
+   - Results organized into "Tasks" and "Notes" sections
+   - Each section shows result count
+   - Tasks show completion status and parent list
+   - Notes show color and preview
+   - Matching keywords highlighted in yellow
+
+4. **Navigate to Results**:
+   - Click any result to open it
+   - Tasks: Opens the list containing that task
+   - Notes: Opens the note for editing
+
 ### Keyboard Shortcuts
 
 The dashboard includes a dedicated keyboard shortcuts modal with modern key visualizations:
 
 - **Enter** (in task input) - Add new task
 - **Escape** - Close any open modal
+- **Ctrl+F** (or **⌘+F** on Mac) - Open global search
 - **Ctrl+K** (or **⌘+K** on Mac) - Open shortcuts guide
 - **Ctrl+S** (or **⌘+S** on Mac) - Open settings
 - **Ctrl+D** (or **⌘+D** on Mac) - Toggle dark mode
@@ -581,9 +626,10 @@ Potential features for future versions:
 - [ ] Daily quotes/motivation
 - [ ] Weather forecast (5-day)
 - [ ] Export/import settings, notes, and lists
-- [ ] Search/filter notes and tasks functionality
+- [ ] Advanced filters (by date, color, completion status)
 - [ ] Drag-and-drop task reordering
 - [ ] List templates (e.g., "Weekly Shopping", "Project Plan")
+- [ ] Task priorities and due dates
 - [ ] Custom background images
 - [ ] More widget options
 - [ ] PWA support for offline use
@@ -669,21 +715,35 @@ If you found this project helpful or inspiring:
 
 ## 📊 Project Stats
 
-- **Lines of Code**: ~2,450
+- **Lines of Code**: ~2,850
 - **Technologies**: 3 (HTML, CSS, JS)
 - **External APIs**: 2
-- **Features**: 14+
-- **Modals**: 7 (Settings, Shortcuts, Todo Overview, Create List, View List, List Settings, Notes Overview, Note Edit)
-- **Keyboard Shortcuts**: 5
+- **Features**: 15+
+- **Modals**: 8 (Settings, Shortcuts, Search, Todo Overview, Create List, View List, List Settings, Notes Overview, Note Edit)
+- **Keyboard Shortcuts**: 6
 - **Color Options**: 12 (6 for lists, 6 for notes)
-- **File Size**: < 65KB
+- **File Size**: < 75KB
 - **Load Time**: < 1 second
 
 ---
 
 ## 🔖 Version History
 
-### v1.0.3 (Current)
+### v1.0.4 (Current)
+- ✅ **New:** Global search feature across all tasks and notes
+- ✅ **New:** Search button (🔍) next to settings in top-right
+- ✅ **New:** Real-time search with instant results
+- ✅ **New:** Search highlighting - matching terms highlighted in yellow
+- ✅ **New:** Click search results to open task list or note
+- ✅ **New:** Ctrl+F keyboard shortcut for quick search access
+- ✅ **New:** Organized results by type (Tasks / Notes)
+- ✅ **New:** Result count displayed for each category
+- ✅ **Enhanced:** Search through task titles, task notes, note titles, and note content
+- ✅ **Enhanced:** Shows which list each task belongs to
+- ✅ **Enhanced:** Displays completion status for tasks
+- ✅ **Added:** Search modal with beautiful UI matching dashboard style
+
+### v1.0.3
 - ✅ **Major Update:** Multi-list to-do system with 3-modal workflow
 - ✅ **New:** Create multiple color-coded to-do lists
 - ✅ **New:** Organize tasks by category or project
