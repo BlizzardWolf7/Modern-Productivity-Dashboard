@@ -485,6 +485,179 @@
       background: rgba(102, 126, 234, 0.15);
     }
 
+    /* Keyboard Shortcuts Button */
+    .shortcuts-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      background: transparent;
+      color: var(--text);
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .shortcuts-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    body.dark .shortcuts-btn {
+      border-color: rgba(102, 126, 234, 0.4);
+    }
+
+    body.dark .shortcuts-btn:hover {
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    /* Keyboard Shortcuts Modal */
+    #shortcutsModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1001;
+    }
+
+    #shortcutsModal.active {
+      display: flex;
+    }
+
+    .shortcuts-modal {
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .shortcuts-modal h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .shortcut-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .shortcut-item:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark .shortcut-item {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark .shortcut-item:hover {
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    .shortcut-description {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.9;
+    }
+
+    .shortcut-keys {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      height: 32px;
+      padding: 0 0.5rem;
+      background: linear-gradient(180deg, #fff 0%, #f0f0f0 100%);
+      border: 1px solid #d0d0d0;
+      border-bottom: 3px solid #b0b0b0;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #333;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      text-transform: uppercase;
+      transition: all 0.15s ease;
+    }
+
+    body.dark .key {
+      background: linear-gradient(180deg, #4a5568 0%, #2d3748 100%);
+      border: 1px solid #1a202c;
+      border-bottom: 3px solid #1a202c;
+      color: #f7fafc;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .key:active {
+      transform: translateY(1px);
+      border-bottom-width: 2px;
+    }
+
+    .key svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .key-plus {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.6;
+      font-weight: 500;
+    }
+
+    .modal-close-btn {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .modal-close-btn:active {
+      transform: translateY(0);
+    }
+
     footer {
       margin-top: 3rem;
       font-size: 0.9rem;
@@ -590,6 +763,60 @@
         </svg>
         View GitHub Profile
       </a>
+
+      <button id="shortcutsBtn" class="shortcuts-btn">
+        ⌨️ Keyboard Shortcuts
+      </button>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div id="shortcutsModal">
+    <div class="modal-content shortcuts-modal">
+      <h3>⌨️ Keyboard Shortcuts</h3>
+      
+      <div class="shortcut-item">
+        <span class="shortcut-description">Add task</span>
+        <div class="shortcut-keys">
+          <span class="key">Enter</span>
+        </div>
+      </div>
+
+      <div class="shortcut-item">
+        <span class="shortcut-description">Close modal</span>
+        <div class="shortcut-keys">
+          <span class="key">Esc</span>
+        </div>
+      </div>
+
+      <div class="shortcut-item">
+        <span class="shortcut-description">Open settings</span>
+        <div class="shortcut-keys">
+          <span class="key">Ctrl</span>
+          <span class="key-plus">+</span>
+          <span class="key">S</span>
+        </div>
+      </div>
+
+      <div class="shortcut-item">
+        <span class="shortcut-description">Toggle dark mode</span>
+        <div class="shortcut-keys">
+          <span class="key">Ctrl</span>
+          <span class="key-plus">+</span>
+          <span class="key">D</span>
+        </div>
+      </div>
+
+      <div class="shortcut-item">
+        <span class="shortcut-description">View shortcuts</span>
+        <div class="shortcut-keys">
+          <span class="key">Ctrl</span>
+          <span class="key-plus">+</span>
+          <span class="key">K</span>
+        </div>
+      </div>
+
+      <button id="closeShortcutsBtn" class="modal-close-btn">Close</button>
     </div>
   </div>
 
@@ -837,6 +1064,68 @@
         position: "top-right"
       });
     }, 500);
+
+    /* SHORTCUTS MODAL */
+    const shortcutsBtn = document.getElementById("shortcutsBtn");
+    const shortcutsModal = document.getElementById("shortcutsModal");
+    const closeShortcutsBtn = document.getElementById("closeShortcutsBtn");
+
+    shortcutsBtn.onclick = () => {
+      shortcutsModal.classList.add("active");
+    };
+
+    closeShortcutsBtn.onclick = () => {
+      shortcutsModal.classList.remove("active");
+    };
+
+    shortcutsModal.onclick = (e) => {
+      if (e.target === shortcutsModal) {
+        shortcutsModal.classList.remove("active");
+      }
+    };
+
+    /* KEYBOARD SHORTCUTS */
+    document.addEventListener("keydown", (e) => {
+      // Escape - Close any open modal
+      if (e.key === "Escape") {
+        if (modal.classList.contains("active")) {
+          modal.classList.remove("active");
+        }
+        if (shortcutsModal.classList.contains("active")) {
+          shortcutsModal.classList.remove("active");
+        }
+      }
+
+      // Ctrl+S - Open settings
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        modal.classList.add("active");
+      }
+
+      // Ctrl+K - Open shortcuts guide
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        shortcutsModal.classList.add("active");
+      }
+
+      // Ctrl+D - Toggle dark mode
+      if ((e.ctrlKey || e.metaKey) && e.key === "d") {
+        e.preventDefault();
+        darkToggle.checked = !darkToggle.checked;
+        
+        const settings = JSON.parse(localStorage.getItem("settings")) || {};
+        settings.darkMode = darkToggle.checked;
+        localStorage.setItem("settings", JSON.stringify(settings));
+        applySettings();
+        
+        showToast({
+          text: darkToggle.checked ? "Dark mode enabled" : "Light mode enabled",
+          type: "success",
+          duration: 2000,
+          position: "top-right"
+        });
+      }
+    });
   </script>
 </body>
 </html>

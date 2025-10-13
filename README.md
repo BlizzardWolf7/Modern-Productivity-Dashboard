@@ -45,6 +45,12 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - **Dark mode toggle** - Switch between light and dark themes
 - **Settings persistence** - All preferences saved locally
 
+### ⌨️ **Keyboard Shortcuts**
+- **Dedicated shortcuts modal** - Beautiful guide with modern key visualizations
+- **5 productivity shortcuts** - Quick access to all features
+- **Cross-platform support** - Works with Ctrl (Windows/Linux) and ⌘ (Mac)
+- **Instant access** - Press Ctrl+K to view shortcuts anytime
+
 ### 🔗 **Social Integration**
 - Link to personal website in footer
 - GitHub profile link in settings modal
@@ -150,8 +156,15 @@ The dashboard automatically:
 
 ### Keyboard Shortcuts
 
+The dashboard includes a dedicated keyboard shortcuts modal with modern key visualizations:
+
 - **Enter** (in task input) - Add new task
-- **Escape** (when modal open) - Close settings modal (click outside)
+- **Escape** - Close any open modal
+- **Ctrl+K** (or **⌘+K** on Mac) - Open shortcuts guide
+- **Ctrl+S** (or **⌘+S** on Mac) - Open settings
+- **Ctrl+D** (or **⌘+D** on Mac) - Toggle dark mode
+
+Access the full shortcuts guide via the button in settings or press **Ctrl+K**.
 
 ---
 
@@ -461,7 +474,6 @@ Potential features for future versions:
 - [ ] Daily quotes/motivation
 - [ ] Weather forecast (5-day)
 - [ ] Export/import settings and tasks
-- [ ] Keyboard shortcuts guide
 - [ ] Custom background images
 - [ ] More widget options
 - [ ] PWA support for offline use
@@ -547,18 +559,26 @@ If you found this project helpful or inspiring:
 
 ## 📊 Project Stats
 
-- **Lines of Code**: ~860
+- **Lines of Code**: ~1,130
 - **Technologies**: 3 (HTML, CSS, JS)
 - **External APIs**: 2
-- **Features**: 10+
-- **File Size**: < 30KB
+- **Features**: 12+
+- **Keyboard Shortcuts**: 5
+- **File Size**: < 40KB
 - **Load Time**: < 1 second
 
 ---
 
 ## 🔖 Version History
 
-### v1.0.0 (Current)
+### v1.0.1 (Current)
+- ✅ **New:** Dedicated keyboard shortcuts modal
+- ✅ **New:** Ctrl+K shortcut to open shortcuts guide
+- ✅ **Improved:** Keyboard shortcuts now in separate modal
+- ✅ **Enhanced:** Better modal management (Escape closes any modal)
+- ✅ **Added:** Shortcuts button in settings panel
+
+### v1.0.0
 - ✅ Initial release
 - ✅ Real-time clock
 - ✅ Weather integration
@@ -566,9 +586,10 @@ If you found this project helpful or inspiring:
 - ✅ Settings customization
 - ✅ Dark mode support
 - ✅ Toast notifications
-- ✅ Location detection
+- ✅ Location detection (city & country)
 - ✅ Smooth animations
 - ✅ Responsive design
+- ✅ Social links integration
 
 ---
 
