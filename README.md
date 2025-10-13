@@ -36,6 +36,8 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - **Color-coded lists** - Choose from 6 colors for visual organization
 - Add, complete, and delete tasks within each list
 - **Task notes** - Add optional notes/context to any task
+- **Task priorities** - Set Low, Medium, or High priority with color-coded badges
+- **Due dates** - Set optional due dates with smart indicators (overdue, today, upcoming)
 - **Beautiful input design** - Stacked inputs in contained card style
 - **Task completion tracking** - See progress at a glance
 - **Persistent storage** using localStorage
@@ -56,6 +58,7 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 ### ⚙️ **Customizable Settings**
 - **Dashboard title customization** - Make it your own
 - **Personal greeting** - Add your name for a personalized experience
+- **Greeting visibility toggle** - Show or hide the greeting for a minimal look
 - **Accent color picker** - Choose your favorite color theme
 - **Dark mode toggle** - Switch between light and dark themes
 - **Settings persistence** - All preferences saved locally
@@ -67,6 +70,8 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - **Smart categorization** - Results organized by Tasks and Notes
 - **Quick navigation** - Click any result to open it
 - **Completion status** - See if tasks are done or pending
+- **Priority badges** - Color-coded priority indicators in search results
+- **Due date badges** - Smart date display with overdue/today warnings
 - **List context** - Shows which list each task belongs to
 - **Ctrl+F shortcut** - Quick access with keyboard
 
@@ -146,6 +151,7 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
    - Click the ⚙️ settings icon in the top-right corner (or press Ctrl+S)
    - Set your dashboard title
    - Enter your name for personalized greeting
+   - Toggle "Show Greeting" to display or hide the greeting
    - Choose your favorite accent color
    - Toggle dark mode if preferred
    - Click "Save" to apply changes
@@ -178,12 +184,18 @@ Once inside a list:
 - **Add task**: 
   - Enter task title in the first input field (required)
   - Optionally add a note in the second field for additional context
-  - Click "Add Task" button or press **Enter** from either field
+  - Choose priority: None, Low, Medium, or High
+  - Set an optional due date
+  - Click "Add Task" button or press **Enter** from any field
   - Beautiful contained design with dashed border
 - **Complete task**: Click on task text to toggle done/undone
-- **Delete task**: Click the ✕ button next to the task
+- **Delete task**: Click the ✕ button in top-right corner
 - **View progress**: See completion count at the top (e.g., "3/5 completed")
-- **Task notes**: Display below task title in italic style
+- **Task display includes**:
+  - Task title (bold)
+  - Task note (italic, if added)
+  - Priority badge (color-coded: Red=High, Orange=Medium, Blue=Low)
+  - Due date badge (with smart status: ⚠️ overdue, 📅 today, 📆 upcoming)
 - Tasks show with different styling when completed (strikethrough + reduced opacity)
 
 #### Editing List Settings
@@ -266,8 +278,14 @@ The powerful search feature helps you find anything instantly:
 3. **View Results**:
    - Results organized into "Tasks" and "Notes" sections
    - Each section shows result count
-   - Tasks show completion status and parent list
-   - Notes show color and preview
+   - **Tasks display**:
+     - Completion status
+     - Priority badge (color-coded)
+     - Due date badge (with overdue/today indicators)
+     - Parent list name
+   - **Notes display**:
+     - Color indicator
+     - Content preview
    - Matching keywords highlighted in yellow
 
 4. **Navigate to Results**:
@@ -427,10 +445,18 @@ The dashboard stores data in browser localStorage:
   "title": "My Productivity Dashboard",
   "name": "Your Name",
   "accent": "#667eea",
-  "darkMode": true
+  "darkMode": true,
+  "showGreeting": true
 }
 ```
 **Key**: `"settings"`
+
+**Settings Properties**:
+- `title` - Dashboard title text
+- `name` - User's name for greeting
+- `accent` - Accent color (hex)
+- `darkMode` - Dark theme enabled (boolean)
+- `showGreeting` - Display greeting (boolean, default: true)
 
 #### To-Do Lists Array
 ```javascript
@@ -442,12 +468,16 @@ The dashboard stores data in browser localStorage:
     "tasks": [
       {
         "text": "Complete project report",
-        "note": "Due by Friday",
+        "note": "Include Q4 analysis",
+        "priority": "high",
+        "dueDate": "2025-10-15",
         "done": false
       },
       {
         "text": "Review pull request",
         "note": "",
+        "priority": "medium",
+        "dueDate": "2025-10-14",
         "done": true
       }
     ]
@@ -461,7 +491,20 @@ The dashboard stores data in browser localStorage:
 **Task Structure**:
 - `text` (required) - The main task title
 - `note` (optional) - Additional context or details
+- `priority` (optional) - Task priority: `none`, `low`, `medium`, `high`
+- `dueDate` (optional) - Due date in YYYY-MM-DD format
 - `done` (boolean) - Completion status
+
+**Priority Levels**:
+- `high` - Red badge, urgent/critical tasks
+- `medium` - Orange badge, important tasks
+- `low` - Blue badge, nice-to-have tasks
+- `none` - No badge displayed
+
+**Due Date States**:
+- **Overdue** - Red badge with ⚠️ icon
+- **Today** - Yellow badge with 📅 icon
+- **Upcoming** - Default badge with 📆 icon
 
 #### Notes Array
 ```javascript
@@ -626,10 +669,12 @@ Potential features for future versions:
 - [ ] Daily quotes/motivation
 - [ ] Weather forecast (5-day)
 - [ ] Export/import settings, notes, and lists
-- [ ] Advanced filters (by date, color, completion status)
+- [ ] Advanced filters (by priority, date, color, completion status)
+- [ ] Sort tasks by priority or due date
 - [ ] Drag-and-drop task reordering
 - [ ] List templates (e.g., "Weekly Shopping", "Project Plan")
-- [ ] Task priorities and due dates
+- [ ] Recurring tasks
+- [ ] Task reminders/notifications
 - [ ] Custom background images
 - [ ] More widget options
 - [ ] PWA support for offline use
@@ -715,21 +760,41 @@ If you found this project helpful or inspiring:
 
 ## 📊 Project Stats
 
-- **Lines of Code**: ~2,850
+- **Lines of Code**: ~3,050
 - **Technologies**: 3 (HTML, CSS, JS)
 - **External APIs**: 2
-- **Features**: 15+
+- **Features**: 17+
 - **Modals**: 8 (Settings, Shortcuts, Search, Todo Overview, Create List, View List, List Settings, Notes Overview, Note Edit)
 - **Keyboard Shortcuts**: 6
+- **Customization Options**: 5 (Title, Name, Greeting, Accent Color, Dark Mode)
 - **Color Options**: 12 (6 for lists, 6 for notes)
-- **File Size**: < 75KB
+- **Priority Levels**: 4 (None, Low, Medium, High)
+- **File Size**: < 80KB
 - **Load Time**: < 1 second
 
 ---
 
 ## 🔖 Version History
 
-### v1.0.4 (Current)
+### v1.0.5 (Current)
+- ✅ **New:** Toggle greeting visibility in settings
+- ✅ **New:** "Show Greeting" checkbox in settings panel
+- ✅ **New:** Task priority system (None, Low, Medium, High)
+- ✅ **New:** Due date picker for tasks
+- ✅ **New:** Color-coded priority badges (Red, Orange, Blue)
+- ✅ **New:** Smart due date indicators (⚠️ overdue, 📅 today, 📆 upcoming)
+- ✅ **New:** Priority and due date selectors in task creation
+- ✅ **Improved:** Greeting can now be hidden for minimal look
+- ✅ **Improved:** Task structure includes priority and dueDate fields
+- ✅ **Improved:** Search results now display priority and due date badges
+- ✅ **Enhanced:** Greeting setting persists across sessions
+- ✅ **Enhanced:** Tasks display priority and due date badges
+- ✅ **Enhanced:** Overdue tasks highlighted in red (in tasks and search)
+- ✅ **Enhanced:** Today's tasks highlighted in yellow (in tasks and search)
+- ✅ **Enhanced:** Search results show complete task information with colors
+- ✅ **Added:** Default greeting is enabled (backwards compatible)
+
+### v1.0.4
 - ✅ **New:** Global search feature across all tasks and notes
 - ✅ **New:** Search button (🔍) next to settings in top-right
 - ✅ **New:** Real-time search with instant results
