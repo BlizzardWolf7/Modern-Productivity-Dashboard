@@ -38,6 +38,11 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - **Task notes** - Add optional notes/context to any task
 - **Task priorities** - Set Low, Medium, or High priority with color-coded badges
 - **Due dates** - Set optional due dates with smart indicators (overdue, today, upcoming)
+- **Overdue notifications** - Dashboard shows count of overdue tasks with red pulsing animation
+- **Due today notifications** - Dashboard shows count of tasks due today with yellow pulsing animation
+- **Smart list highlighting** - Lists with urgent tasks highlighted (red for overdue, yellow for due today)
+- **Deadline badges** - Each list shows "⚠️ X overdue" or "📅 X due today" indicator
+- **Priority system** - Overdue takes visual priority over due today
 - **Beautiful input design** - Stacked inputs in contained card style
 - **Task completion tracking** - See progress at a glance
 - **Persistent storage** using localStorage
@@ -161,6 +166,12 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
    - Type any keyword to search
    - Click results to navigate to tasks or notes
 
+4. **Stay on Top of Deadlines**:
+   - Dashboard shows overdue tasks count (red)
+   - Dashboard shows tasks due today count (yellow)
+   - Lists with urgent tasks are highlighted (red for overdue, yellow for due today)
+   - Set due dates when creating tasks to enable deadline tracking
+
 ### Using the Multi-List To-Do System
 
 #### Creating a New List
@@ -219,6 +230,42 @@ Inside a list view:
 - 🟠 **Orange** - Urgent or time-sensitive items
 - 🩷 **Pink** - Fun, social, or leisure activities
 - 🔴 **Red** - Critical or high-priority tasks
+
+#### Task Deadline Notifications
+
+**On Dashboard:**
+- **"X tasks overdue"** - Red counter with pulsing animation (shown first)
+- **"X tasks due today"** - Yellow/orange counter with pulsing animation
+- Both counters only count incomplete tasks
+- Displayed prominently in the To-Do Lists widget
+
+**In Lists Overview:**
+
+**Overdue Tasks (Priority):**
+- Lists with overdue tasks are **highlighted** with red gradient background
+- **Red border** around the entire card
+- **Red glow effect** on card shadow
+- **"⚠️ X overdue" badge** at the bottom of the card (full-width, red)
+- Takes visual priority over "due today" if both exist
+
+**Tasks Due Today:**
+- Lists with tasks due today are **highlighted** with yellow gradient background
+- **Yellow border** around the entire card
+- **Golden glow effect** on card shadow
+- **"📅 X due today" badge** at the bottom of the card (full-width, yellow)
+- Only shown if no overdue tasks in that list
+
+**Visual Priority:**
+1. Lists with overdue tasks: **Red** highlighting (most urgent)
+2. Lists with tasks due today: **Yellow** highlighting (urgent)
+3. Normal lists: Standard card styling
+
+**Badge Details:**
+- Badges span full card width for maximum visibility
+- Position at card bottom for clean layout
+- Icons: ⚠️ (overdue) and 📅 (due today)
+- Gradient backgrounds matching urgency level
+- Makes it impossible to miss time-sensitive tasks
 
 ### Weather & Location
 
@@ -760,23 +807,42 @@ If you found this project helpful or inspiring:
 
 ## 📊 Project Stats
 
-- **Lines of Code**: ~3,050
+- **Lines of Code**: ~3,180
 - **Technologies**: 3 (HTML, CSS, JS)
 - **External APIs**: 2
-- **Features**: 17+
+- **Features**: 18+
 - **Modals**: 8 (Settings, Shortcuts, Search, Todo Overview, Create List, View List, List Settings, Notes Overview, Note Edit)
 - **Keyboard Shortcuts**: 6
 - **Customization Options**: 5 (Title, Name, Greeting, Accent Color, Dark Mode)
 - **Color Options**: 12 (6 for lists, 6 for notes)
 - **Priority Levels**: 4 (None, Low, Medium, High)
-- **File Size**: < 80KB
+- **Smart Notifications**: Overdue tasks + Tasks due today tracking
+- **File Size**: < 90KB
 - **Load Time**: < 1 second
 
 ---
 
 ## 🔖 Version History
 
-### v1.0.5 (Current)
+### v1.0.6 (Current)
+- ✅ **New:** Tasks overdue notification system with red styling
+- ✅ **New:** Tasks due today notification system with yellow styling
+- ✅ **New:** Dashboard widget shows "X tasks overdue" counter (red, pulsing)
+- ✅ **New:** Dashboard widget shows "X tasks due today" counter (yellow, pulsing)
+- ✅ **New:** Lists with overdue tasks highlighted with red gradient
+- ✅ **New:** Lists with tasks due today highlighted with yellow gradient
+- ✅ **New:** Overdue badge on list cards (e.g., "⚠️ 2 overdue") - full-width at bottom
+- ✅ **New:** Due today badge on list cards (e.g., "📅  2 due today") - full-width at bottom
+- ✅ **New:** Priority system - overdue takes visual priority over due today
+- ✅ **Enhanced:** List cards with overdue tasks have red glow effect (highest priority)
+- ✅ **Enhanced:** List cards with due today tasks have golden glow effect
+- ✅ **Enhanced:** Better visual hierarchy for time-sensitive items
+- ✅ **Enhanced:** Badges span full card width for maximum visibility
+- ✅ **Improved:** Only counts incomplete tasks in deadline counters
+- ✅ **Improved:** Badges positioned at bottom for cleaner card layout
+- ✅ **Improved:** Smart highlighting - red overrides yellow when both exist
+
+### v1.0.5
 - ✅ **New:** Toggle greeting visibility in settings
 - ✅ **New:** "Show Greeting" checkbox in settings panel
 - ✅ **New:** Task priority system (None, Low, Medium, High)

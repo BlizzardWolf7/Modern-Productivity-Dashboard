@@ -216,7 +216,54 @@
       font-size: 0.95rem;
       color: var(--text);
       opacity: 0.7;
+      margin-bottom: 0.25rem;
+    }
+
+    .tasks-overdue {
+      font-size: 0.9rem;
+      color: #ef4444;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      padding: 0.4rem 0.6rem;
+      background: rgba(239, 68, 68, 0.15);
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .tasks-overdue.has-tasks {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    body.dark .tasks-overdue {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .tasks-due-today {
+      font-size: 0.9rem;
+      color: #f59e0b;
+      font-weight: 600;
       margin-bottom: 1rem;
+      padding: 0.4rem 0.6rem;
+      background: rgba(251, 191, 36, 0.15);
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .tasks-due-today.has-tasks {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    body.dark .tasks-due-today {
+      background: rgba(251, 191, 36, 0.2);
     }
 
     .todo-btn {
@@ -290,6 +337,7 @@
     }
 
     .todo-list-card {
+      position: relative;
       background: var(--card-bg);
       border-radius: 12px;
       padding: 1.5rem;
@@ -304,12 +352,78 @@
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     }
 
+    .todo-list-card.has-overdue {
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.25);
+    }
+
+    .todo-list-card.has-overdue:hover {
+      box-shadow: 0 6px 25px rgba(239, 68, 68, 0.35);
+    }
+
+    body.dark .todo-list-card.has-overdue {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, var(--card-bg) 50%);
+    }
+
+    .todo-list-card.has-due-today {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, var(--card-bg) 50%);
+      border: 2px solid rgba(251, 191, 36, 0.4);
+      box-shadow: 0 4px 20px rgba(251, 191, 36, 0.2);
+    }
+
+    .todo-list-card.has-due-today:hover {
+      box-shadow: 0 6px 25px rgba(251, 191, 36, 0.3);
+    }
+
+    body.dark .todo-list-card.has-due-today {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, var(--card-bg) 50%);
+    }
+
     .todo-list-card.blue { border-left-color: #3b82f6; }
     .todo-list-card.green { border-left-color: #10b981; }
     .todo-list-card.purple { border-left-color: #8b5cf6; }
     .todo-list-card.orange { border-left-color: #f97316; }
     .todo-list-card.pink { border-left-color: #ec4899; }
     .todo-list-card.red { border-left-color: #ef4444; }
+
+    .overdue-badge {
+      background: linear-gradient(135deg, #fca5a5, #f87171);
+      color: #7f1d1d;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.4rem 0.7rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    body.dark .overdue-badge {
+      color: #fff;
+    }
+
+    .due-today-badge {
+      background: linear-gradient(135deg, #fcd34d, #fbbf24);
+      color: #78350f;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.4rem 0.7rem;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    body.dark .due-today-badge {
+      color: #78350f;
+    }
 
     .todo-list-header {
       display: flex;
@@ -1867,6 +1981,8 @@
       <div class="todo-widget">
         <h2>To-Do Lists</h2>
         <p class="todo-count" id="todoCount">0 tasks</p>
+        <p class="tasks-overdue" id="tasksOverdue">0 tasks overdue</p>
+        <p class="tasks-due-today" id="tasksDueToday">0 tasks due today</p>
         <button id="openTodoBtn" class="todo-btn">✓ View Tasks</button>
       </div>
     </div>
@@ -2269,6 +2385,32 @@
       const completedTasks = todoLists.reduce((sum, list) => 
         sum + list.tasks.filter(t => t.done).length, 0);
       todoCount.textContent = `${totalTasks} task${totalTasks !== 1 ? 's' : ''} (${completedTasks} done)`;
+      
+      // Count tasks overdue
+      const tasksOverdue = todoLists.reduce((sum, list) => 
+        sum + list.tasks.filter(t => !t.done && t.dueDate && isOverdue(t.dueDate)).length, 0);
+      
+      const tasksOverdueEl = document.getElementById("tasksOverdue");
+      tasksOverdueEl.textContent = `${tasksOverdue} task${tasksOverdue !== 1 ? 's' : ''} overdue`;
+      
+      if (tasksOverdue > 0) {
+        tasksOverdueEl.classList.add('has-tasks');
+      } else {
+        tasksOverdueEl.classList.remove('has-tasks');
+      }
+      
+      // Count tasks due today
+      const tasksDueToday = todoLists.reduce((sum, list) => 
+        sum + list.tasks.filter(t => !t.done && t.dueDate && isToday(t.dueDate)).length, 0);
+      
+      const tasksDueTodayEl = document.getElementById("tasksDueToday");
+      tasksDueTodayEl.textContent = `${tasksDueToday} task${tasksDueToday !== 1 ? 's' : ''} due today`;
+      
+      if (tasksDueToday > 0) {
+        tasksDueTodayEl.classList.add('has-tasks');
+      } else {
+        tasksDueTodayEl.classList.remove('has-tasks');
+      }
     }
 
     // Render to-do lists overview
@@ -2285,12 +2427,37 @@
 
       todoListsContainer.innerHTML = todoLists.map(list => {
         const completedCount = list.tasks.filter(t => t.done).length;
+        
+        // Count tasks overdue in this list
+        const tasksOverdueInList = list.tasks.filter(t => 
+          !t.done && t.dueDate && isOverdue(t.dueDate)
+        ).length;
+        
+        // Count tasks due today in this list
+        const tasksDueTodayInList = list.tasks.filter(t => 
+          !t.done && t.dueDate && isToday(t.dueDate)
+        ).length;
+        
+        const hasOverdue = tasksOverdueInList > 0;
+        const hasDueToday = tasksDueTodayInList > 0;
+        
+        // Overdue takes priority over due today
+        const highlightClass = hasOverdue ? 'has-overdue' : (hasDueToday ? 'has-due-today' : '');
+        
+        const overdueBadge = hasOverdue 
+          ? `<div class="overdue-badge">⚠️ ${tasksOverdueInList} overdue</div>` 
+          : '';
+        
+        const dueTodayBadge = hasDueToday && !hasOverdue
+          ? `<div class="due-today-badge">📅 ${tasksDueTodayInList} due today</div>` 
+          : '';
+        
         const tasksPreview = list.tasks.slice(0, 5).map(task => `
           <div class="todo-list-task ${task.done ? 'done' : ''}">${task.text}</div>
         `).join('');
         
         return `
-          <div class="todo-list-card ${list.color}" data-id="${list.id}">
+          <div class="todo-list-card ${list.color} ${highlightClass}" data-id="${list.id}">
             <div class="todo-list-header">
               <div class="todo-list-name">${list.name || 'Untitled List'}</div>
               <div class="todo-list-count">${completedCount}/${list.tasks.length}</div>
@@ -2299,6 +2466,8 @@
               ${tasksPreview || '<div class="todo-list-task" style="opacity: 0.5;">No tasks yet</div>'}
               ${list.tasks.length > 5 ? `<div class="todo-list-task" style="opacity: 0.5;">+ ${list.tasks.length - 5} more...</div>` : ''}
             </div>
+            ${overdueBadge}
+            ${dueTodayBadge}
           </div>
         `;
       }).join('');
