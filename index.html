@@ -108,6 +108,10 @@
       animation-delay: 0.5s;
     }
 
+    .card:nth-child(4) {
+      animation-delay: 0.6s;
+    }
+
     .card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-hover);
@@ -197,121 +201,610 @@
       background: rgba(102, 126, 234, 0.15);
     }
 
-    /* To-do list */
-    .todo {
-      display: flex;
-      flex-direction: column;
+    /* To-Do Widget */
+    .todo-widget {
+      text-align: center;
     }
 
-    .todo h2 {
-      margin-bottom: 1rem;
-      text-align: center;
+    .todo-widget h2 {
+      margin-bottom: 0.5rem;
       font-size: 1.3rem;
       font-weight: 600;
     }
 
-    .todo input {
-      padding: 0.75rem;
-      border: 2px solid transparent;
-      border-radius: 10px;
-      margin-bottom: 0.75rem;
-      background: rgba(102, 126, 234, 0.05);
-      color: var(--text);
+    .todo-count {
       font-size: 0.95rem;
-      transition: all 0.3s ease;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 1rem;
     }
 
-    .todo input:focus {
-      outline: none;
-      border-color: var(--accent);
-      background: rgba(102, 126, 234, 0.1);
-    }
-
-    body.dark .todo input {
-      background: rgba(102, 126, 234, 0.1);
-    }
-
-    body.dark .todo input:focus {
-      background: rgba(102, 126, 234, 0.15);
-    }
-
-    .todo button {
+    .todo-btn {
+      width: 100%;
       padding: 0.75rem;
       border: none;
       background: linear-gradient(135deg, var(--accent), #764ba2);
       color: #fff;
       border-radius: 10px;
       cursor: pointer;
-      margin-bottom: 1rem;
       font-weight: 600;
       font-size: 0.95rem;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .todo button:hover {
+    .todo-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     }
 
-    .todo button:active {
-      transform: translateY(0);
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    li {
-      display: flex;
-      justify-content: space-between;
+    /* To-Do Lists Modal */
+    #todoModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
       align-items: center;
-      background: rgba(102, 126, 234, 0.08);
-      color: var(--text);
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1001;
+    }
+
+    #todoModal.active {
+      display: flex;
+    }
+
+    .todo-modal {
+      max-width: 900px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .create-list-btn {
+      width: 100%;
       padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 2px dashed rgba(102, 126, 234, 0.4);
+      background: rgba(102, 126, 234, 0.05);
+      color: var(--text);
       border-radius: 10px;
-      margin-bottom: 0.5rem;
-      border-left: 3px solid var(--accent);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
       transition: all 0.2s ease;
     }
 
-    li:hover {
-      background: rgba(102, 126, 234, 0.12);
-      transform: translateX(5px);
+    .create-list-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: var(--accent);
     }
 
-    body.dark li {
-      background: rgba(102, 126, 234, 0.15);
+    #todoListsContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
     }
 
-    body.dark li:hover {
-      background: rgba(102, 126, 234, 0.2);
-    }
-
-    li span {
-      flex: 1;
+    .todo-list-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border-left: 4px solid;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       cursor: pointer;
-      font-size: 0.95rem;
+      transition: all 0.2s ease;
     }
 
-    li span.done {
+    .todo-list-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .todo-list-card.blue { border-left-color: #3b82f6; }
+    .todo-list-card.green { border-left-color: #10b981; }
+    .todo-list-card.purple { border-left-color: #8b5cf6; }
+    .todo-list-card.orange { border-left-color: #f97316; }
+    .todo-list-card.pink { border-left-color: #ec4899; }
+    .todo-list-card.red { border-left-color: #ef4444; }
+
+    .todo-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .todo-list-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .todo-list-count {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      color: var(--text);
+    }
+
+    .todo-list-tasks {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .todo-list-task {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .todo-list-task.done {
       text-decoration: line-through;
       opacity: 0.5;
     }
 
-    li button {
+    .todo-list-task::before {
+      content: '○';
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .todo-list-task.done::before {
+      content: '●';
+    }
+
+    .empty-todo {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text);
+      opacity: 0.6;
+    }
+
+    /* Create List Modal */
+    #createListModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1002;
+    }
+
+    #createListModal.active {
+      display: flex;
+    }
+
+    .create-list-modal {
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .create-list-modal input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: rgba(102, 126, 234, 0.05);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .create-list-modal input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    /* View List Modal */
+    #viewListModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1002;
+    }
+
+    #viewListModal.active {
+      display: flex;
+    }
+
+    .view-list-modal {
+      max-width: 600px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .list-header-with-settings {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .list-header-with-settings h3 {
+      margin: 0;
+    }
+
+    .list-settings-btn {
+      background: rgba(102, 126, 234, 0.1);
       border: none;
-      background: none;
-      color: #f56565;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
       cursor: pointer;
       font-size: 1.2rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: 5px;
+      transition: all 0.2s ease;
+      color: var(--text);
+    }
+
+    .list-settings-btn:hover {
+      background: rgba(102, 126, 234, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .task-stats {
+      text-align: center;
+      margin-bottom: 1.25rem;
+      padding: 0.5rem;
+      background: rgba(102, 126, 234, 0.08);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .add-task-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding: 1.25rem;
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 12px;
+      border: 2px dashed rgba(102, 126, 234, 0.2);
+    }
+
+    .add-task-section input {
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .add-task-section input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: var(--card-bg);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    }
+
+    .add-task-section .task-note-input {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    body.dark .add-task-section input {
+      background: rgba(45, 55, 72, 0.8);
+    }
+
+    body.dark .add-task-section input:focus {
+      background: rgba(45, 55, 72, 0.9);
+    }
+
+    .add-task-section button {
+      width: 100%;
+      padding: 0.85rem;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
       transition: all 0.2s ease;
     }
 
-    li button:hover {
+    .add-task-section button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .add-task-section button:active {
+      transform: translateY(0);
+    }
+
+    .view-list-tasks {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .view-list-tasks li {
+      position: relative;
+      background: rgba(102, 126, 234, 0.08);
+      color: var(--text);
+      padding: 1rem 1.25rem;
+      padding-right: 3rem;
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      border-left: 4px solid var(--accent);
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .view-list-tasks li:hover {
+      background: rgba(102, 126, 234, 0.12);
+      transform: translateX(3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    body.dark .view-list-tasks li {
+      background: rgba(102, 126, 234, 0.15);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark .view-list-tasks li:hover {
+      background: rgba(102, 126, 234, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .view-list-tasks li span {
+      cursor: pointer;
+      font-size: 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 100%;
+    }
+
+    .view-list-tasks li span.done .task-text {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .task-text {
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    .task-note {
+      font-size: 0.85rem;
+      opacity: 0.65;
+      font-style: italic;
+      line-height: 1.3;
+      padding-left: 0.5rem;
+      border-left: 2px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .view-list-tasks li span.done .task-note {
+      opacity: 0.35;
+      text-decoration: line-through;
+    }
+
+    .view-list-tasks li button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      border: none;
       background: rgba(245, 101, 101, 0.1);
+      color: #f56565;
+      cursor: pointer;
+      font-size: 1rem;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+    }
+
+    .view-list-tasks li:hover button {
+      opacity: 1;
+    }
+
+    .view-list-tasks li button:hover {
+      background: rgba(245, 101, 101, 0.2);
+      transform: scale(1.15);
+      box-shadow: 0 2px 8px rgba(245, 101, 101, 0.3);
+    }
+
+    .view-list-tasks li button:active {
+      transform: scale(1);
+    }
+
+    .empty-tasks {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text);
+      opacity: 0.5;
+      font-size: 0.95rem;
+    }
+
+    /* List Settings Modal */
+    #listSettingsModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1003;
+    }
+
+    #listSettingsModal.active {
+      display: flex;
+    }
+
+    .list-settings-modal {
+      max-width: 450px;
+      width: 90%;
+    }
+
+    .list-settings-modal label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .list-settings-modal input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: rgba(102, 126, 234, 0.05);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .list-settings-modal input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .list-colors {
+      margin-bottom: 1.5rem;
+    }
+
+    .list-colors label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .list-color-options {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .list-color-option {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .list-color-option:hover {
       transform: scale(1.1);
+    }
+
+    .list-color-option.active {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px var(--card-bg);
+    }
+
+    .list-color-option.active::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    .list-color-option.blue { background: #3b82f6; }
+    .list-color-option.green { background: #10b981; }
+    .list-color-option.purple { background: #8b5cf6; }
+    .list-color-option.orange { background: #f97316; }
+    .list-color-option.pink { background: #ec4899; }
+    .list-color-option.red { background: #ef4444; }
+
+    .list-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .save-list-btn,
+    .delete-list-btn,
+    .cancel-list-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .save-list-btn {
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      color: #fff;
+    }
+
+    .save-list-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .delete-list-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+    }
+
+    .delete-list-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+    }
+
+    .cancel-list-btn {
+      background: rgba(102, 126, 234, 0.1);
+      color: var(--text);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .cancel-list-btn:hover {
+      background: rgba(102, 126, 234, 0.15);
     }
 
     /* Settings */
@@ -658,6 +1151,365 @@
       transform: translateY(0);
     }
 
+    /* Notes Widget */
+    .notes-widget {
+      text-align: center;
+    }
+
+    .notes-widget h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .notes-count {
+      font-size: 0.95rem;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+
+    .notes-btn {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .notes-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Notes Modal */
+    #notesModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1001;
+    }
+
+    #notesModal.active {
+      display: flex;
+    }
+
+    .notes-modal {
+      max-width: 900px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .create-note-btn {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      border: 2px dashed rgba(102, 126, 234, 0.4);
+      background: rgba(102, 126, 234, 0.05);
+      color: var(--text);
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .create-note-btn:hover {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: var(--accent);
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .sticky-note {
+      position: relative;
+      padding: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .sticky-note:hover {
+      transform: translateY(-5px) rotate(1deg);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .sticky-note.yellow {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #78350f;
+    }
+
+    .sticky-note.pink {
+      background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+      color: #831843;
+    }
+
+    .sticky-note.blue {
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      color: #1e3a8a;
+    }
+
+    .sticky-note.green {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      color: #064e3b;
+    }
+
+    .sticky-note.purple {
+      background: linear-gradient(135deg, #e9d5ff 0%, #d8b4fe 100%);
+      color: #581c87;
+    }
+
+    .sticky-note.orange {
+      background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+      color: #7c2d12;
+    }
+
+    .sticky-note-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sticky-note-preview {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+      -webkit-box-orient: vertical;
+      flex-grow: 1;
+    }
+
+    .sticky-note-date {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      margin-top: 0.5rem;
+    }
+
+    .empty-notes {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text);
+      opacity: 0.6;
+    }
+
+    .empty-notes svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Note Edit Modal */
+    #noteEditModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1002;
+    }
+
+    #noteEditModal.active {
+      display: flex;
+    }
+
+    .note-edit-modal {
+      max-width: 600px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .note-edit-modal input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: rgba(102, 126, 234, 0.05);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .note-edit-modal input[type="text"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .note-edit-modal textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background: rgba(102, 126, 234, 0.05);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+
+    .note-edit-modal textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .note-colors {
+      margin-bottom: 1.5rem;
+    }
+
+    .note-colors label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .color-options {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .color-option {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .color-option:hover {
+      transform: scale(1.1);
+    }
+
+    .color-option.active {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px var(--card-bg);
+    }
+
+    .color-option.active::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .color-option.yellow {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+    }
+
+    .color-option.pink {
+      background: linear-gradient(135deg, #fce7f3, #fbcfe8);
+    }
+
+    .color-option.blue {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    }
+
+    .color-option.green {
+      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    }
+
+    .color-option.purple {
+      background: linear-gradient(135deg, #e9d5ff, #d8b4fe);
+    }
+
+    .color-option.orange {
+      background: linear-gradient(135deg, #fed7aa, #fdba74);
+    }
+
+    .note-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .save-note-btn,
+    .delete-note-btn,
+    .cancel-note-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .save-note-btn {
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      color: #fff;
+    }
+
+    .save-note-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .delete-note-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+    }
+
+    .delete-note-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+    }
+
+    .cancel-note-btn {
+      background: rgba(102, 126, 234, 0.1);
+      color: var(--text);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+    }
+
+    .cancel-note-btn:hover {
+      background: rgba(102, 126, 234, 0.15);
+    }
+
     footer {
       margin-top: 3rem;
       font-size: 0.9rem;
@@ -727,11 +1579,18 @@
     </div>
 
     <div class="card">
-      <div class="todo">
-        <h2>To-Do List</h2>
-        <input type="text" id="taskInput" placeholder="New task..." />
-        <button id="addTaskBtn">Add Task</button>
-        <ul id="taskList"></ul>
+      <div class="todo-widget">
+        <h2>To-Do Lists</h2>
+        <p class="todo-count" id="todoCount">0 tasks</p>
+        <button id="openTodoBtn" class="todo-btn">✓ View Tasks</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="notes-widget">
+        <h2>Notes</h2>
+        <p class="notes-count" id="notesCount">0 notes</p>
+        <button id="openNotesBtn" class="notes-btn">📝 View Notes</button>
       </div>
     </div>
   </div>
@@ -820,6 +1679,136 @@
     </div>
   </div>
 
+  <!-- To-Do Lists Modal -->
+  <div id="todoModal">
+    <div class="modal-content todo-modal">
+      <h3>✓ My To-Do Lists</h3>
+      <button id="createListBtn" class="create-list-btn">+ New List</button>
+      <div id="todoListsContainer">
+        <!-- To-do lists will be dynamically added here -->
+      </div>
+      <button id="closeTodoBtn" class="modal-close-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Create List Modal -->
+  <div id="createListModal">
+    <div class="modal-content create-list-modal">
+      <h3>Create New List</h3>
+      <input type="text" id="newListNameInput" placeholder="List name (e.g., Work, Shopping)..." maxlength="30" />
+      
+      <div class="list-colors">
+        <label>Color:</label>
+        <div class="list-color-options" id="createListColors">
+          <div class="list-color-option blue active" data-color="blue"></div>
+          <div class="list-color-option green" data-color="green"></div>
+          <div class="list-color-option purple" data-color="purple"></div>
+          <div class="list-color-option orange" data-color="orange"></div>
+          <div class="list-color-option pink" data-color="pink"></div>
+          <div class="list-color-option red" data-color="red"></div>
+        </div>
+      </div>
+      
+      <div class="list-actions">
+        <button id="createListSaveBtn" class="save-list-btn">Create List</button>
+        <button id="createListCancelBtn" class="cancel-list-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- View/Edit Tasks Modal -->
+  <div id="viewListModal">
+    <div class="modal-content view-list-modal">
+      <div class="list-header-with-settings">
+        <h3 id="viewListName">List Name</h3>
+        <button id="listSettingsBtn" class="list-settings-btn" title="List Settings">⚙️</button>
+      </div>
+      
+      <div class="task-stats">
+        <span id="taskProgress">0/0 completed</span>
+      </div>
+
+      <div class="add-task-section">
+        <input type="text" id="viewListTaskInput" placeholder="Task title..." />
+        <input type="text" id="viewListTaskNote" placeholder="Optional note..." class="task-note-input" />
+        <button id="viewListAddTaskBtn">+ Add Task</button>
+      </div>
+
+      <ul id="viewListTasks" class="view-list-tasks">
+        <!-- Tasks will be added here -->
+      </ul>
+      
+      <button id="closeViewListBtn" class="modal-close-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- List Settings Modal -->
+  <div id="listSettingsModal">
+    <div class="modal-content list-settings-modal">
+      <h3>List Settings</h3>
+      
+      <label>List Name:</label>
+      <input type="text" id="settingsListNameInput" placeholder="List name..." maxlength="30" />
+      
+      <div class="list-colors">
+        <label>Color:</label>
+        <div class="list-color-options" id="settingsListColors">
+          <div class="list-color-option blue" data-color="blue"></div>
+          <div class="list-color-option green" data-color="green"></div>
+          <div class="list-color-option purple" data-color="purple"></div>
+          <div class="list-color-option orange" data-color="orange"></div>
+          <div class="list-color-option pink" data-color="pink"></div>
+          <div class="list-color-option red" data-color="red"></div>
+        </div>
+      </div>
+      
+      <div class="list-actions">
+        <button id="saveListSettingsBtn" class="save-list-btn">Save Changes</button>
+        <button id="deleteListFromSettingsBtn" class="delete-list-btn">Delete List</button>
+        <button id="cancelListSettingsBtn" class="cancel-list-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes List Modal -->
+  <div id="notesModal">
+    <div class="modal-content notes-modal">
+      <h3>📝 My Notes</h3>
+      <button id="createNoteBtn" class="create-note-btn">+ New Note</button>
+      <div id="notesGrid" class="notes-grid">
+        <!-- Notes will be dynamically added here -->
+      </div>
+      <button id="closeNotesBtn" class="modal-close-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Note Edit Modal -->
+  <div id="noteEditModal">
+    <div class="modal-content note-edit-modal">
+      <h3 id="noteEditTitle">New Note</h3>
+      <input type="text" id="noteTitleInput" placeholder="Note title..." maxlength="50" />
+      <textarea id="noteContentInput" placeholder="Write your note here..." rows="10"></textarea>
+      
+      <div class="note-colors">
+        <label>Color:</label>
+        <div class="color-options">
+          <div class="color-option yellow active" data-color="yellow"></div>
+          <div class="color-option pink" data-color="pink"></div>
+          <div class="color-option blue" data-color="blue"></div>
+          <div class="color-option green" data-color="green"></div>
+          <div class="color-option purple" data-color="purple"></div>
+          <div class="color-option orange" data-color="orange"></div>
+        </div>
+      </div>
+      
+      <div class="note-actions">
+        <button id="saveNoteBtn" class="save-note-btn">Save Note</button>
+        <button id="deleteNoteBtn" class="delete-note-btn" style="display: none;">Delete Note</button>
+        <button id="cancelNoteBtn" class="cancel-note-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/gh/BlizzardWolf7/Toast-Notification-Library@main/toast.js"></script>
   <script>
     /* CLOCK */
@@ -890,107 +1879,441 @@
       );
     }
 
-    /* TO-DO LIST */
-    const taskInput = document.getElementById("taskInput");
-    const addTaskBtn = document.getElementById("addTaskBtn");
-    const taskList = document.getElementById("taskList");
+    /* TO-DO LISTS SYSTEM */
+    const openTodoBtn = document.getElementById("openTodoBtn");
+    const todoModal = document.getElementById("todoModal");
+    const closeTodoBtn = document.getElementById("closeTodoBtn");
+    const createListBtn = document.getElementById("createListBtn");
+    const todoListsContainer = document.getElementById("todoListsContainer");
+    const todoCount = document.getElementById("todoCount");
+    
+    // Create List Modal
+    const createListModal = document.getElementById("createListModal");
+    const newListNameInput = document.getElementById("newListNameInput");
+    const createListSaveBtn = document.getElementById("createListSaveBtn");
+    const createListCancelBtn = document.getElementById("createListCancelBtn");
+    
+    // View List Modal
+    const viewListModal = document.getElementById("viewListModal");
+    const viewListName = document.getElementById("viewListName");
+    const viewListTaskInput = document.getElementById("viewListTaskInput");
+    const viewListTaskNote = document.getElementById("viewListTaskNote");
+    const viewListAddTaskBtn = document.getElementById("viewListAddTaskBtn");
+    const viewListTasks = document.getElementById("viewListTasks");
+    const taskProgress = document.getElementById("taskProgress");
+    const closeViewListBtn = document.getElementById("closeViewListBtn");
+    const listSettingsBtn = document.getElementById("listSettingsBtn");
+    
+    // List Settings Modal
+    const listSettingsModal = document.getElementById("listSettingsModal");
+    const settingsListNameInput = document.getElementById("settingsListNameInput");
+    const saveListSettingsBtn = document.getElementById("saveListSettingsBtn");
+    const deleteListFromSettingsBtn = document.getElementById("deleteListFromSettingsBtn");
+    const cancelListSettingsBtn = document.getElementById("cancelListSettingsBtn");
+    
+    let todoLists = [];
+    let currentListId = null;
+    let createListColor = 'blue';
+    let settingsListColor = 'blue';
 
-    function loadTasks() {
-      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-      tasks.forEach(t => renderTask(t.text, t.done));
+    // Load to-do lists from localStorage
+    function loadTodoLists() {
+      todoLists = JSON.parse(localStorage.getItem("todoLists")) || [];
+      renderTodoLists();
+      updateTodoCount();
     }
 
-    function saveTasks() {
-      const tasks = [];
-      document.querySelectorAll("#taskList li").forEach(li => {
-        tasks.push({
-          text: li.querySelector("span").textContent,
-          done: li.querySelector("span").classList.contains("done")
+    // Save to-do lists to localStorage
+    function saveTodoLists() {
+      localStorage.setItem("todoLists", JSON.stringify(todoLists));
+      updateTodoCount();
+    }
+
+    // Update total tasks count
+    function updateTodoCount() {
+      const totalTasks = todoLists.reduce((sum, list) => sum + list.tasks.length, 0);
+      const completedTasks = todoLists.reduce((sum, list) => 
+        sum + list.tasks.filter(t => t.done).length, 0);
+      todoCount.textContent = `${totalTasks} task${totalTasks !== 1 ? 's' : ''} (${completedTasks} done)`;
+    }
+
+    // Render to-do lists overview
+    function renderTodoLists() {
+      if (todoLists.length === 0) {
+        todoListsContainer.innerHTML = `
+          <div class="empty-todo">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">✓</div>
+            <p>No lists yet. Create your first to-do list!</p>
+          </div>
+        `;
+        return;
+      }
+
+      todoListsContainer.innerHTML = todoLists.map(list => {
+        const completedCount = list.tasks.filter(t => t.done).length;
+        const tasksPreview = list.tasks.slice(0, 5).map(task => `
+          <div class="todo-list-task ${task.done ? 'done' : ''}">${task.text}</div>
+        `).join('');
+        
+        return `
+          <div class="todo-list-card ${list.color}" data-id="${list.id}">
+            <div class="todo-list-header">
+              <div class="todo-list-name">${list.name || 'Untitled List'}</div>
+              <div class="todo-list-count">${completedCount}/${list.tasks.length}</div>
+            </div>
+            <div class="todo-list-tasks">
+              ${tasksPreview || '<div class="todo-list-task" style="opacity: 0.5;">No tasks yet</div>'}
+              ${list.tasks.length > 5 ? `<div class="todo-list-task" style="opacity: 0.5;">+ ${list.tasks.length - 5} more...</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Add click listeners to lists
+      document.querySelectorAll('.todo-list-card').forEach(listEl => {
+        listEl.addEventListener('click', () => {
+          const id = listEl.dataset.id;
+          openListView(id);
         });
       });
-      localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
-    function renderTask(text, done = false) {
-      const li = document.createElement("li");
-      const span = document.createElement("span");
-      span.textContent = text;
-      if (done) span.classList.add("done");
-      span.onclick = () => { 
-        span.classList.toggle("done"); 
-        saveTasks(); 
-        
-        // Show toast for task completion
-        if (span.classList.contains("done")) {
-          showToast({
-            text: "Task completed! 🎉",
-            type: "success",
-            duration: 2000,
-            position: "bottom-right"
-          });
+    // Open to-do lists overview modal
+    openTodoBtn.onclick = () => {
+      todoModal.classList.add("active");
+    };
+
+    closeTodoBtn.onclick = () => {
+      todoModal.classList.remove("active");
+    };
+
+    todoModal.onclick = (e) => {
+      if (e.target === todoModal) {
+        todoModal.classList.remove("active");
+      }
+    };
+
+    // CREATE LIST MODAL
+    createListBtn.onclick = () => {
+      newListNameInput.value = "";
+      createListColor = 'blue';
+      updateCreateListColorSelection();
+      createListModal.classList.add("active");
+    };
+
+    // Color selection for create modal
+    document.querySelectorAll('#createListColors .list-color-option').forEach(option => {
+      option.addEventListener('click', () => {
+        createListColor = option.dataset.color;
+        updateCreateListColorSelection();
+      });
+    });
+
+    function updateCreateListColorSelection() {
+      document.querySelectorAll('#createListColors .list-color-option').forEach(option => {
+        if (option.dataset.color === createListColor) {
+          option.classList.add('active');
         } else {
-          showToast({
-            text: "Task marked as incomplete",
-            type: "info",
-            duration: 2000,
-            position: "bottom-right"
-          });
+          option.classList.remove('active');
         }
-      };
-      const del = document.createElement("button");
-      del.textContent = "✕";
-      del.onclick = () => { 
-        const taskText = span.textContent;
-        li.remove(); 
-        saveTasks(); 
-        
-        // Show toast for task deletion
-        showToast({
-          text: `Task deleted: "${taskText}"`,
-          type: "info",
-          duration: 3000,
-          position: "bottom-right"
-        });
-      };
-      li.append(span, del);
-      taskList.appendChild(li);
+      });
     }
 
-    function addTask() {
-      const text = taskInput.value.trim();
-      if (text) {
-        renderTask(text);
-        saveTasks();
-        taskInput.value = "";
-        
-        // Show toast for task added
+    createListSaveBtn.onclick = () => {
+      const name = newListNameInput.value.trim();
+
+      if (!name) {
         showToast({
-          text: `Task added: "${text}"`,
-          type: "success",
-          duration: 2500,
-          position: "bottom-right"
-        });
-      } else {
-        // Show error toast if trying to add empty task
-        showToast({
-          text: "Please enter a task before adding",
+          text: "Please enter a list name",
           type: "warning",
           duration: 2500,
           position: "bottom-right"
         });
+        return;
       }
+
+      const newList = {
+        id: Date.now().toString(),
+        name,
+        color: createListColor,
+        tasks: []
+      };
+      todoLists.unshift(newList);
+      saveTodoLists();
+      renderTodoLists();
+      createListModal.classList.remove("active");
+      
+      showToast({
+        text: `List "${name}" created!`,
+        type: "success",
+        duration: 2500,
+        position: "bottom-right"
+      });
+    };
+
+    createListCancelBtn.onclick = () => {
+      createListModal.classList.remove("active");
+    };
+
+    createListModal.onclick = (e) => {
+      if (e.target === createListModal) {
+        createListModal.classList.remove("active");
+      }
+    };
+
+    // VIEW LIST MODAL
+    function openListView(id) {
+      const list = todoLists.find(l => l.id === id);
+      if (!list) return;
+
+      currentListId = id;
+      viewListName.textContent = list.name;
+      viewListTaskInput.value = "";
+      viewListTaskNote.value = "";
+      renderViewListTasks();
+      viewListModal.classList.add("active");
     }
 
-    addTaskBtn.onclick = addTask;
-    
-    // Add task on Enter key press
-    taskInput.addEventListener("keypress", (e) => {
+    function renderViewListTasks() {
+      const list = todoLists.find(l => l.id === currentListId);
+      if (!list) return;
+
+      const completedCount = list.tasks.filter(t => t.done).length;
+      taskProgress.textContent = `${completedCount}/${list.tasks.length} completed`;
+
+      if (list.tasks.length === 0) {
+        viewListTasks.innerHTML = '<div class="empty-tasks">No tasks yet. Add your first task above!</div>';
+        return;
+      }
+
+      viewListTasks.innerHTML = list.tasks.map((task, index) => {
+        const noteHtml = task.note ? `<div class="task-note">${task.note}</div>` : '';
+        return `
+          <li>
+            <span class="${task.done ? 'done' : ''}" data-index="${index}">
+              <div class="task-text">${task.text}</div>
+              ${noteHtml}
+            </span>
+            <button data-index="${index}">✕</button>
+          </li>
+        `;
+      }).join('');
+
+      // Add click listeners
+      viewListTasks.querySelectorAll('span').forEach(span => {
+        span.addEventListener('click', () => {
+          const index = parseInt(span.dataset.index);
+          toggleTaskCompletion(index);
+        });
+      });
+
+      viewListTasks.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const index = parseInt(btn.dataset.index);
+          deleteTask(index);
+        });
+      });
+    }
+
+    function addTaskToCurrentList() {
+      const text = viewListTaskInput.value.trim();
+      const note = viewListTaskNote.value.trim();
+      
+      if (!text) {
+        showToast({
+          text: "Please enter a task title",
+          type: "warning",
+          duration: 2000,
+          position: "bottom-right"
+        });
+        return;
+      }
+
+      const list = todoLists.find(l => l.id === currentListId);
+      if (!list) return;
+
+      list.tasks.push({ text, note, done: false });
+      saveTodoLists();
+      renderViewListTasks();
+      renderTodoLists();
+      viewListTaskInput.value = "";
+      viewListTaskNote.value = "";
+
+      showToast({
+        text: "Task added!",
+        type: "success",
+        duration: 2000,
+        position: "bottom-right"
+      });
+    }
+
+    function toggleTaskCompletion(index) {
+      const list = todoLists.find(l => l.id === currentListId);
+      if (!list) return;
+
+      list.tasks[index].done = !list.tasks[index].done;
+      saveTodoLists();
+      renderViewListTasks();
+      renderTodoLists();
+
+      showToast({
+        text: list.tasks[index].done ? "Task completed! 🎉" : "Task marked incomplete",
+        type: list.tasks[index].done ? "success" : "info",
+        duration: 2000,
+        position: "bottom-right"
+      });
+    }
+
+    function deleteTask(index) {
+      const list = todoLists.find(l => l.id === currentListId);
+      if (!list) return;
+
+      const taskText = list.tasks[index].text;
+      list.tasks.splice(index, 1);
+      saveTodoLists();
+      renderViewListTasks();
+      renderTodoLists();
+
+      showToast({
+        text: `Task deleted: "${taskText}"`,
+        type: "info",
+        duration: 2500,
+        position: "bottom-right"
+      });
+    }
+
+    viewListAddTaskBtn.onclick = addTaskToCurrentList;
+
+    // Enter key support for both inputs
+    viewListTaskInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
-        addTask();
+        addTaskToCurrentList();
       }
     });
 
-    loadTasks();
+    viewListTaskNote.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        addTaskToCurrentList();
+      }
+    });
+
+    closeViewListBtn.onclick = () => {
+      viewListModal.classList.remove("active");
+    };
+
+    viewListModal.onclick = (e) => {
+      if (e.target === viewListModal) {
+        viewListModal.classList.remove("active");
+      }
+    };
+
+    // LIST SETTINGS MODAL
+    listSettingsBtn.onclick = () => {
+      const list = todoLists.find(l => l.id === currentListId);
+      if (!list) return;
+
+      settingsListNameInput.value = list.name;
+      settingsListColor = list.color;
+      updateSettingsListColorSelection();
+      listSettingsModal.classList.add("active");
+    };
+
+    // Color selection for settings modal
+    document.querySelectorAll('#settingsListColors .list-color-option').forEach(option => {
+      option.addEventListener('click', () => {
+        settingsListColor = option.dataset.color;
+        updateSettingsListColorSelection();
+      });
+    });
+
+    function updateSettingsListColorSelection() {
+      document.querySelectorAll('#settingsListColors .list-color-option').forEach(option => {
+        if (option.dataset.color === settingsListColor) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+    }
+
+    saveListSettingsBtn.onclick = () => {
+      const name = settingsListNameInput.value.trim();
+
+      if (!name) {
+        showToast({
+          text: "Please enter a list name",
+          type: "warning",
+          duration: 2500,
+          position: "bottom-right"
+        });
+        return;
+      }
+
+      const listIndex = todoLists.findIndex(l => l.id === currentListId);
+      if (listIndex !== -1) {
+        todoLists[listIndex].name = name;
+        todoLists[listIndex].color = settingsListColor;
+        saveTodoLists();
+        renderTodoLists();
+        viewListName.textContent = name;
+        listSettingsModal.classList.remove("active");
+
+        showToast({
+          text: "List settings updated!",
+          type: "success",
+          duration: 2000,
+          position: "bottom-right"
+        });
+      }
+    };
+
+    deleteListFromSettingsBtn.onclick = () => {
+      if (!currentListId) return;
+
+      if (confirm("Are you sure you want to delete this list and all its tasks?")) {
+        todoLists = todoLists.filter(l => l.id !== currentListId);
+        saveTodoLists();
+        renderTodoLists();
+        listSettingsModal.classList.remove("active");
+        viewListModal.classList.remove("active");
+        
+        showToast({
+          text: "List deleted",
+          type: "info",
+          duration: 2500,
+          position: "bottom-right"
+        });
+      }
+    };
+
+    cancelListSettingsBtn.onclick = () => {
+      listSettingsModal.classList.remove("active");
+    };
+
+    listSettingsModal.onclick = (e) => {
+      if (e.target === listSettingsModal) {
+        listSettingsModal.classList.remove("active");
+      }
+    };
+
+    // Keyboard shortcuts for modals
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (listSettingsModal.classList.contains("active")) {
+          listSettingsModal.classList.remove("active");
+        } else if (viewListModal.classList.contains("active")) {
+          viewListModal.classList.remove("active");
+        } else if (createListModal.classList.contains("active")) {
+          createListModal.classList.remove("active");
+        } else if (todoModal.classList.contains("active")) {
+          todoModal.classList.remove("active");
+        }
+      }
+    });
+
+    // Initialize to-do lists
+    loadTodoLists();
 
     /* SETTINGS */
     const settingsBtn = document.getElementById("settingsBtn");
@@ -1126,6 +2449,243 @@
         });
       }
     });
+
+    /* NOTES SYSTEM */
+    const openNotesBtn = document.getElementById("openNotesBtn");
+    const notesModal = document.getElementById("notesModal");
+    const closeNotesBtn = document.getElementById("closeNotesBtn");
+    const createNoteBtn = document.getElementById("createNoteBtn");
+    const notesGrid = document.getElementById("notesGrid");
+    const noteEditModal = document.getElementById("noteEditModal");
+    const noteEditTitle = document.getElementById("noteEditTitle");
+    const noteTitleInput = document.getElementById("noteTitleInput");
+    const noteContentInput = document.getElementById("noteContentInput");
+    const saveNoteBtn = document.getElementById("saveNoteBtn");
+    const deleteNoteBtn = document.getElementById("deleteNoteBtn");
+    const cancelNoteBtn = document.getElementById("cancelNoteBtn");
+    const notesCount = document.getElementById("notesCount");
+    
+    let notes = [];
+    let currentNoteId = null;
+    let selectedColor = 'yellow';
+
+    // Load notes from localStorage
+    function loadNotes() {
+      notes = JSON.parse(localStorage.getItem("notes")) || [];
+      renderNotes();
+      updateNotesCount();
+    }
+
+    // Save notes to localStorage
+    function saveNotes() {
+      localStorage.setItem("notes", JSON.stringify(notes));
+      updateNotesCount();
+    }
+
+    // Update notes count
+    function updateNotesCount() {
+      const count = notes.length;
+      notesCount.textContent = `${count} note${count !== 1 ? 's' : ''}`;
+    }
+
+    // Render notes grid
+    function renderNotes() {
+      if (notes.length === 0) {
+        notesGrid.innerHTML = `
+          <div class="empty-notes">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📝</div>
+            <p>No notes yet. Create your first note!</p>
+          </div>
+        `;
+        return;
+      }
+
+      notesGrid.innerHTML = notes.map(note => {
+        const preview = note.content.substring(0, 100);
+        const date = new Date(note.date).toLocaleDateString();
+        
+        return `
+          <div class="sticky-note ${note.color}" data-id="${note.id}">
+            <div class="sticky-note-title">${note.title || 'Untitled'}</div>
+            <div class="sticky-note-preview">${note.content || 'No content'}</div>
+            <div class="sticky-note-date">${date}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Add click listeners to notes
+      document.querySelectorAll('.sticky-note').forEach(noteEl => {
+        noteEl.addEventListener('click', () => {
+          const id = noteEl.dataset.id;
+          openNoteForEditing(id);
+        });
+      });
+    }
+
+    // Open notes modal
+    openNotesBtn.onclick = () => {
+      notesModal.classList.add("active");
+    };
+
+    // Close notes modal
+    closeNotesBtn.onclick = () => {
+      notesModal.classList.remove("active");
+    };
+
+    notesModal.onclick = (e) => {
+      if (e.target === notesModal) {
+        notesModal.classList.remove("active");
+      }
+    };
+
+    // Create new note
+    createNoteBtn.onclick = () => {
+      currentNoteId = null;
+      noteEditTitle.textContent = "New Note";
+      noteTitleInput.value = "";
+      noteContentInput.value = "";
+      selectedColor = 'yellow';
+      updateColorSelection();
+      deleteNoteBtn.style.display = "none";
+      noteEditModal.classList.add("active");
+    };
+
+    // Open note for editing
+    function openNoteForEditing(id) {
+      const note = notes.find(n => n.id === id);
+      if (!note) return;
+
+      currentNoteId = id;
+      noteEditTitle.textContent = "Edit Note";
+      noteTitleInput.value = note.title;
+      noteContentInput.value = note.content;
+      selectedColor = note.color;
+      updateColorSelection();
+      deleteNoteBtn.style.display = "block";
+      noteEditModal.classList.add("active");
+    }
+
+    // Color selection
+    document.querySelectorAll('.color-option').forEach(option => {
+      option.addEventListener('click', () => {
+        selectedColor = option.dataset.color;
+        updateColorSelection();
+      });
+    });
+
+    function updateColorSelection() {
+      document.querySelectorAll('.color-option').forEach(option => {
+        if (option.dataset.color === selectedColor) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+    }
+
+    // Save note
+    saveNoteBtn.onclick = () => {
+      const title = noteTitleInput.value.trim();
+      const content = noteContentInput.value.trim();
+
+      if (!title && !content) {
+        showToast({
+          text: "Please add a title or content to your note",
+          type: "warning",
+          duration: 2500,
+          position: "bottom-right"
+        });
+        return;
+      }
+
+      if (currentNoteId) {
+        // Update existing note
+        const noteIndex = notes.findIndex(n => n.id === currentNoteId);
+        if (noteIndex !== -1) {
+          notes[noteIndex] = {
+            ...notes[noteIndex],
+            title,
+            content,
+            color: selectedColor,
+            date: Date.now()
+          };
+          
+          showToast({
+            text: "Note updated successfully!",
+            type: "success",
+            duration: 2000,
+            position: "bottom-right"
+          });
+        }
+      } else {
+        // Create new note
+        const newNote = {
+          id: Date.now().toString(),
+          title,
+          content,
+          color: selectedColor,
+          date: Date.now()
+        };
+        notes.unshift(newNote);
+        
+        showToast({
+          text: "Note created successfully!",
+          type: "success",
+          duration: 2000,
+          position: "bottom-right"
+        });
+      }
+
+      saveNotes();
+      renderNotes();
+      noteEditModal.classList.remove("active");
+    };
+
+    // Delete note
+    deleteNoteBtn.onclick = () => {
+      if (!currentNoteId) return;
+
+      if (confirm("Are you sure you want to delete this note?")) {
+        notes = notes.filter(n => n.id !== currentNoteId);
+        saveNotes();
+        renderNotes();
+        noteEditModal.classList.remove("active");
+        
+        showToast({
+          text: "Note deleted",
+          type: "info",
+          duration: 2000,
+          position: "bottom-right"
+        });
+      }
+    };
+
+    // Cancel note editing
+    cancelNoteBtn.onclick = () => {
+      noteEditModal.classList.remove("active");
+    };
+
+    noteEditModal.onclick = (e) => {
+      if (e.target === noteEditModal) {
+        noteEditModal.classList.remove("active");
+      }
+    };
+
+    // Update keyboard shortcuts to close note modals with Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (noteEditModal.classList.contains("active")) {
+          noteEditModal.classList.remove("active");
+        }
+        if (notesModal.classList.contains("active")) {
+          notesModal.classList.remove("active");
+        }
+      }
+    });
+
+    // Initialize notes
+    loadNotes();
   </script>
 </body>
 </html>
+

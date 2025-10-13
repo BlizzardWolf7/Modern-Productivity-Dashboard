@@ -30,13 +30,28 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - Automatic geolocation support
 - Styled location badge with pin emoji
 
-### ✅ **Smart To-Do List**
-- Add, complete, and delete tasks
+### ✅ **Multi-List To-Do System**
+- **Multiple to-do lists** - Organize tasks by category or project
+- Create, edit, and delete entire lists
+- **Color-coded lists** - Choose from 6 colors for visual organization
+- Add, complete, and delete tasks within each list
+- **Task notes** - Add optional notes/context to any task
+- **Beautiful input design** - Stacked inputs in contained card style
+- **Task completion tracking** - See progress at a glance
 - **Persistent storage** using localStorage
-- Task completion toggle with visual feedback
-- **Enter key support** for quick task addition
-- Beautiful card-style task items with hover effects
-- Toast notifications for all task actions
+- **Enter key support** for quick task addition from both fields
+- Modal-based interface with 3-modal workflow
+- Toast notifications for all actions
+
+### 📝 **Note-Taking Widget**
+- Create, read, update, and delete notes
+- **Color-coded sticky notes** - Choose from 6 beautiful colors
+- Sticky note cards with title and content preview
+- Full-featured note editor modal
+- **Auto-save** to localStorage
+- Notes counter on dashboard
+- Click any note to view/edit full content
+- Delete confirmation for safety
 
 ### ⚙️ **Customizable Settings**
 - **Dashboard title customization** - Make it your own
@@ -125,22 +140,58 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
    - Toggle dark mode if preferred
    - Click "Save" to apply changes
 
-### Using the To-Do List
+### Using the Multi-List To-Do System
 
-#### Adding Tasks
-- Type your task in the input field
-- Click "Add Task" button or press **Enter**
-- See a success toast confirmation
+#### Creating a New List
+1. Click "✓ View Tasks" button on the dashboard
+2. Click "+ New List" button
+3. Enter a list name (e.g., "Work", "Personal", "Shopping")
+4. Choose a color from 6 options (Blue, Green, Purple, Orange, Pink, Red)
+5. Click "Create List"
+6. **Note**: You can only add tasks AFTER creating the list
 
-#### Managing Tasks
-- **Complete a task**: Click on the task text to mark as done
-- **Uncomplete a task**: Click on completed task to mark as pending
-- **Delete a task**: Click the ✕ button on the right
+#### Viewing and Managing Lists
+- Click any list card to open it
+- Each list card shows:
+  - List name with color-coded border
+  - Completion ratio (e.g., "3/5" means 3 of 5 tasks done)
+  - Preview of first 5 tasks
+  - Hover effect for better UX
 
-#### Task Persistence
-- All tasks are automatically saved to localStorage
-- Tasks persist between browser sessions
-- Tasks sync across tabs in the same browser
+#### Managing Tasks Within a List
+Once inside a list:
+- **Add task**: 
+  - Enter task title in the first input field (required)
+  - Optionally add a note in the second field for additional context
+  - Click "Add Task" button or press **Enter** from either field
+  - Beautiful contained design with dashed border
+- **Complete task**: Click on task text to toggle done/undone
+- **Delete task**: Click the ✕ button next to the task
+- **View progress**: See completion count at the top (e.g., "3/5 completed")
+- **Task notes**: Display below task title in italic style
+- Tasks show with different styling when completed (strikethrough + reduced opacity)
+
+#### Editing List Settings
+Inside a list view:
+1. Click the **⚙️** icon in the top-right of the modal
+2. Edit list name
+3. Change list color
+4. Delete entire list (with confirmation)
+5. Click "Save Changes" to apply
+
+#### List Persistence
+- All lists and tasks automatically saved to localStorage
+- Lists persist between browser sessions
+- Changes sync across tabs in the same browser
+- Real-time updates across all views
+
+#### List Colors & Use Cases
+- 🔵 **Blue** - Default, work/professional tasks
+- 🟢 **Green** - Personal, health, or wellness tasks
+- 🟣 **Purple** - Creative projects or learning
+- 🟠 **Orange** - Urgent or time-sensitive items
+- 🩷 **Pink** - Fun, social, or leisure activities
+- 🔴 **Red** - Critical or high-priority tasks
 
 ### Weather & Location
 
@@ -153,6 +204,32 @@ The dashboard automatically:
 **No Location Permission?**
 - Weather card will show "Location denied"
 - You'll receive a toast notification with instructions
+
+### Using the Notes Widget
+
+#### Creating Notes
+1. Click "📝 View Notes" button on the dashboard
+2. Click "+ New Note" button
+3. Enter a title and content
+4. Choose a color from 6 options (Yellow, Pink, Blue, Green, Purple, Orange)
+5. Click "Save Note"
+
+#### Viewing & Editing Notes
+- Click on any sticky note card to open it
+- Edit the title, content, or color
+- Click "Save Note" to update
+- Notes are auto-saved to localStorage
+
+#### Deleting Notes
+- Open the note you want to delete
+- Click "Delete Note" button
+- Confirm deletion in the popup
+
+#### Note Features
+- **Color-coded organization** - Visual categorization
+- **Date tracking** - See when notes were created/modified
+- **Preview cards** - Quick overview in grid view
+- **Character limit** - Titles limited to 50 characters
 
 ### Keyboard Shortcuts
 
@@ -310,20 +387,52 @@ The dashboard stores data in browser localStorage:
 ```
 **Key**: `"settings"`
 
-#### Tasks Array
+#### To-Do Lists Array
 ```javascript
 [
   {
-    "text": "Task description",
-    "done": false
-  },
-  {
-    "text": "Completed task",
-    "done": true
+    "id": "1234567890",
+    "name": "Work Tasks",
+    "color": "blue",
+    "tasks": [
+      {
+        "text": "Complete project report",
+        "note": "Due by Friday",
+        "done": false
+      },
+      {
+        "text": "Review pull request",
+        "note": "",
+        "done": true
+      }
+    ]
   }
 ]
 ```
-**Key**: `"tasks"`
+**Key**: `"todoLists"`
+
+**List Colors**: `blue`, `green`, `purple`, `orange`, `pink`, `red`
+
+**Task Structure**:
+- `text` (required) - The main task title
+- `note` (optional) - Additional context or details
+- `done` (boolean) - Completion status
+
+#### Notes Array
+```javascript
+[
+  {
+    "id": "1234567890",
+    "title": "Note Title",
+    "content": "Note content here...",
+    "color": "yellow",
+    "date": 1234567890
+  }
+]
+```
+**Key**: `"notes"`
+
+**Note Colors**: `yellow`, `pink`, `blue`, `green`, `purple`, `orange`
 
 ### Clearing Data
 
@@ -466,14 +575,15 @@ Dark mode adjusts:
 
 Potential features for future versions:
 
-- [ ] Multiple to-do lists with categories
 - [ ] Pomodoro timer integration
 - [ ] Calendar integration
-- [ ] Note-taking widget
 - [ ] Habit tracker
 - [ ] Daily quotes/motivation
 - [ ] Weather forecast (5-day)
-- [ ] Export/import settings and tasks
+- [ ] Export/import settings, notes, and lists
+- [ ] Search/filter notes and tasks functionality
+- [ ] Drag-and-drop task reordering
+- [ ] List templates (e.g., "Weekly Shopping", "Project Plan")
 - [ ] Custom background images
 - [ ] More widget options
 - [ ] PWA support for offline use
@@ -559,19 +669,51 @@ If you found this project helpful or inspiring:
 
 ## 📊 Project Stats
 
-- **Lines of Code**: ~1,130
+- **Lines of Code**: ~2,450
 - **Technologies**: 3 (HTML, CSS, JS)
 - **External APIs**: 2
-- **Features**: 12+
+- **Features**: 14+
+- **Modals**: 7 (Settings, Shortcuts, Todo Overview, Create List, View List, List Settings, Notes Overview, Note Edit)
 - **Keyboard Shortcuts**: 5
-- **File Size**: < 40KB
+- **Color Options**: 12 (6 for lists, 6 for notes)
+- **File Size**: < 65KB
 - **Load Time**: < 1 second
 
 ---
 
 ## 🔖 Version History
 
-### v1.0.1 (Current)
+### v1.0.3 (Current)
+- ✅ **Major Update:** Multi-list to-do system with 3-modal workflow
+- ✅ **New:** Create multiple color-coded to-do lists
+- ✅ **New:** Organize tasks by category or project
+- ✅ **New:** Dedicated list creation modal (name + color only)
+- ✅ **New:** Task management modal (primary interface for adding/managing tasks)
+- ✅ **New:** List settings modal (edit name, color, or delete list)
+- ✅ **New:** Task notes field - Add optional notes/context to any task
+- ✅ **New:** Track completion progress per list
+- ✅ **Improved:** Beautiful task input section with contained design
+- ✅ **Improved:** Input fields stack vertically for better UX
+- ✅ **Improved:** Card-style task items with enhanced spacing
+- ✅ **Improved:** Delete button positioned in top-right corner (smaller, cleaner)
+- ✅ **Improved:** Cleaner separation between list creation and task management
+- ✅ **Improved:** Settings icon (⚙️) for list properties
+- ✅ **Enhanced:** Task management is now the primary focus when viewing a list
+- ✅ **Enhanced:** Tasks display title + note in card layout with more space
+- ✅ **Enhanced:** Delete button appears on hover for cleaner look
+- ✅ **Enhanced:** Better shadows and hover effects on tasks
+- ✅ **Added:** 6 color options for lists
+
+### v1.0.2
+- ✅ **New:** Note-taking widget with full CRUD functionality
+- ✅ **New:** Color-coded sticky notes (6 colors)
+- ✅ **New:** Beautiful sticky note cards with title and preview
+- ✅ **New:** Note editor modal with rich editing features
+- ✅ **New:** Auto-save notes to localStorage
+- ✅ **Added:** Notes counter on dashboard
+- ✅ **Enhanced:** Smooth animations for 4th card
+
+### v1.0.1
 - ✅ **New:** Dedicated keyboard shortcuts modal
 - ✅ **New:** Ctrl+K shortcut to open shortcuts guide
 - ✅ **Improved:** Keyboard shortcuts now in separate modal
