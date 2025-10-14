@@ -61,11 +61,14 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - Delete confirmation for safety
 
 ### ⚙️ **Customizable Settings**
+- **Organized settings panel** - Collapsible sections for better organization
 - **Dashboard title customization** - Make it your own
 - **Personal greeting** - Add your name for a personalized experience
 - **Greeting visibility toggle** - Show or hide the greeting for a minimal look
 - **Accent color picker** - Choose your favorite color theme
 - **Dark mode toggle** - Switch between light and dark themes
+- **Connection status indicator** - Real-time online/offline status with visual indicator
+- **Cache management** - Clear app cache while preserving your data
 - **Settings persistence** - All preferences saved locally
 
 ### 🔍 **Global Search**
@@ -98,6 +101,18 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - Auto-dismiss with customizable duration
 - Pause on hover functionality
 - Smooth slide-in animations
+
+### 📱 **Progressive Web App (PWA)**
+- **Installable** - Install as a standalone app on any device
+- **Offline support** - Access your dashboard without internet
+- **Service Worker** - Smart caching for performance
+- **App-like experience** - Full-screen mode on mobile
+- **Auto-updates** - Automatic seamless updates when new versions are available
+- **Update detection** - Checks for updates every 5 minutes
+- **Zero-downtime updates** - Updates install in background and activate automatically
+- **Cross-platform icons** - Optimized icons for all devices (Android, iOS, Windows)
+- **Connection monitoring** - Real-time online/offline status indicator in settings
+- **Background sync** - Ready for future cloud sync features
 
 ---
 
@@ -134,6 +149,12 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
    - Simply open `index.html` in your web browser
    - No build process or dependencies to install!
 
+3. **Install as PWA** (Optional):
+   - Open the dashboard in a supported browser
+   - Look for the "Install" button in your browser's address bar
+   - Click to install as a standalone app on your device
+   - Access offline with cached content
+
 ### Alternative: Direct Download
 - Download `index.html` as a standalone file
 - Double-click to open in your default browser
@@ -141,6 +162,7 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 ### Requirements
 - Modern web browser (Chrome 60+, Firefox 55+, Safari 12+, Edge 79+)
 - Internet connection (for weather data and external libraries)
+- For PWA features: HTTPS hosting or localhost
 
 ---
 
@@ -154,12 +176,19 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 
 2. **Customize Your Dashboard**:
    - Click the ⚙️ settings icon in the top-right corner (or press Ctrl+S)
-   - Set your dashboard title
-   - Enter your name for personalized greeting
-   - Toggle "Show Greeting" to display or hide the greeting
-   - Choose your favorite accent color
-   - Toggle dark mode if preferred
-   - Click "Save" to apply changes
+   - **Styling Section** (🎨):
+     - Set your dashboard title
+     - Enter your name for personalized greeting
+     - Toggle "Show Greeting" to display or hide the greeting
+     - Choose your favorite accent color
+     - Toggle dark mode if preferred
+   - **Connection Section** (🌐):
+     - Check connection status (Online/Offline indicator)
+     - Clear app cache if needed (keeps your data safe)
+   - **Guide & About Section** (📖):
+     - View GitHub profile
+     - Access keyboard shortcuts guide
+   - Click "Save Settings" to apply changes
 
 3. **Search Your Content**:
    - Click the 🔍 search icon (or press Ctrl+F)
@@ -353,6 +382,33 @@ The dashboard includes a dedicated keyboard shortcuts modal with modern key visu
 
 Access the full shortcuts guide via the button in settings or press **Ctrl+K**.
 
+### Settings Organization
+
+The settings panel is now organized into collapsible sections for better navigation:
+
+#### 🎨 **Styling**
+- Dashboard title customization
+- Personal name and greeting settings
+- Accent color picker
+- Dark mode toggle
+- Greeting visibility toggle
+
+#### 🌐 **Connection**
+- Real-time connection status indicator (Online/Offline)
+- Clear App Cache button
+  - Removes cached files for fresh updates
+  - **Preserves all your tasks, notes, and settings**
+  - Useful for troubleshooting or forcing updates
+
+#### 📖 **Guide & About**
+- App version display
+- Last updated date
+- Last checked for updates timestamp (updates in real-time)
+- GitHub profile link
+- Keyboard shortcuts guide access
+
+**Tip**: Click any section header to expand/collapse it. The Styling section is open by default.
+
 ---
 
 ## 🎨 Customization
@@ -414,6 +470,12 @@ The card will automatically inherit the styling and animations.
 simple-dashboard/
 │
 ├── index.html          # Main application file (complete dashboard)
+├── manifest.json       # PWA manifest configuration
+├── sw.js              # Service Worker for offline support
+├── icons/             # PWA icons for all platforms
+│   ├── android/       # Android launcher icons
+│   ├── ios/           # iOS app icons
+│   └── windows11/     # Windows 11 tile icons
 └── README.md          # This documentation file
 ```
 
@@ -613,11 +675,11 @@ To reset the dashboard:
 | Action | Toast Type | Message | Duration |
 |--------|-----------|---------|----------|
 | Page Load | Info | "Welcome back, [name]! 👋" | 3500ms |
-| Task Added | Success | "Task added: [task]" | 2500ms |
+| Task Added | Success | "Task added!" | 2000ms |
 | Task Completed | Success | "Task completed! 🎉" | 2000ms |
-| Task Uncompleted | Info | "Task marked as incomplete" | 2000ms |
-| Task Deleted | Info | "Task deleted: [task]" | 3000ms |
-| Empty Task Warning | Warning | "Please enter a task before adding" | 2500ms |
+| Task Uncompleted | Info | "Task marked incomplete" | 2000ms |
+| Task Deleted | Info | "Task deleted: [task]" | 2500ms |
+| Empty Task Warning | Warning | "Please enter a task title" | 2000ms |
 | Settings Saved | Success | "Settings saved successfully!" | 3000ms |
 | Weather Error | Error | "Unable to fetch weather data" | 4000ms |
 | Location Denied | Warning | "Location access denied..." | 5000ms |
@@ -704,6 +766,97 @@ Dark mode adjusts:
 3. Ensure internet connection is stable
 4. Try hard refresh (Ctrl+Shift+R)
 
+### Checking Connection Status
+
+**How to Check**:
+1. Open settings (⚙️ icon in top-right)
+2. Expand the "Connection" section (🌐)
+3. Look at the "Status" indicator
+4. Green dot + "Online" = Connected to internet
+5. Red dot + "Offline" = No internet connection
+
+**Note**: The app works offline thanks to the service worker, but some features (weather, location) require an internet connection.
+
+### Clearing App Cache
+
+**When to Clear Cache**:
+- App not loading latest updates
+- Service worker issues
+- Testing or debugging
+
+**How to Clear**:
+1. Open settings (⚙️ icon in top-right)
+2. Expand the "Connection" section (🌐)
+3. Click "🗑️ Clear App Cache" button
+4. Confirm the action
+5. App will reload automatically
+
+**Important**: Clearing cache removes cached files (HTML, CSS, JS) but **keeps all your tasks, notes, and settings safe** in localStorage.
+
+### PWA Auto-Updates
+
+**How It Works**:
+- The app automatically checks for updates every 5 minutes
+- When a new version is detected, it installs in the background
+- A toast notification appears: "Update found! Installing new version... 🔄"
+- The app automatically reloads to activate the new version
+- Your tasks, notes, and settings remain safe during updates
+
+**How Updates Are Detected**:
+
+The update system uses a multi-step process:
+
+1. **Service Worker Versioning** (`sw.js`):
+   - Each version has a unique cache name (e.g., `productivity-dashboard-v1.0.7`)
+   - When you update your code, you change the version number in `sw.js`
+
+2. **Periodic Checks**:
+   - Every 5 minutes, the app calls `registration.update()`
+   - This forces the browser to check if `sw.js` has changed
+
+3. **File Comparison**:
+   - Browser compares the current `sw.js` file with the one on the server
+   - If they differ (byte-by-byte comparison), it's a new version
+
+4. **Background Installation**:
+   - New service worker downloads and installs in the background
+   - `updatefound` event fires when new worker is detected
+   - Original service worker keeps running (no interruption)
+
+5. **Automatic Activation**:
+   - App sends `SKIP_WAITING` message to new service worker
+   - New worker calls `skipWaiting()` to activate immediately
+   - `controllerchange` event fires and app reloads
+   - New version is now active
+
+**Key Points**:
+- Updates only detected if `sw.js` file changes on server
+- Cache name change forces new resources to download
+- Old cache automatically deleted on activation
+- localStorage (tasks/notes/settings) never touched
+
+**No Action Required**: Updates happen automatically when you're using the PWA. Just keep the app open and it will stay up-to-date!
+
+**Manual Update**: If you want to force an update, you can:
+1. Clear the app cache (Settings → Connection → Clear App Cache)
+2. Or refresh the page (F5 or Ctrl+R)
+
+### Checking App Version & Updates
+
+**View App Information**:
+1. Open settings (⚙️ icon in top-right)
+2. Expand the "Guide & About" section (📖)
+3. View app details:
+   - **Version**: Current app version (v1.0.7)
+   - **Last Updated**: Date of last app update
+   - **Last Checked**: When the app last checked for updates
+
+**Understanding "Last Checked"**:
+- Shows relative time (e.g., "Just now", "2 minutes ago", "1 hour ago")
+- Updates automatically every 60 seconds while viewing settings
+- Stored in localStorage and persists across sessions
+- Reset to current time every 5 minutes when update check runs
+
 ---
 
 ## 🚀 Future Enhancements
@@ -724,7 +877,7 @@ Potential features for future versions:
 - [ ] Task reminders/notifications
 - [ ] Custom background images
 - [ ] More widget options
-- [ ] PWA support for offline use
+- [ ] Enhanced PWA features (push notifications, background refresh)
 - [ ] Sync across devices (cloud storage)
 
 ---
@@ -807,24 +960,60 @@ If you found this project helpful or inspiring:
 
 ## 📊 Project Stats
 
-- **Lines of Code**: ~3,180
+- **Lines of Code**: ~3,600
 - **Technologies**: 3 (HTML, CSS, JS)
 - **External APIs**: 2
-- **Features**: 18+
+- **Features**: 20+
 - **Modals**: 8 (Settings, Shortcuts, Search, Todo Overview, Create List, View List, List Settings, Notes Overview, Note Edit)
 - **Keyboard Shortcuts**: 6
 - **Customization Options**: 5 (Title, Name, Greeting, Accent Color, Dark Mode)
 - **Color Options**: 12 (6 for lists, 6 for notes)
 - **Priority Levels**: 4 (None, Low, Medium, High)
 - **Smart Notifications**: Overdue tasks + Tasks due today tracking
-- **File Size**: < 90KB
+- **PWA Icons**: 180+ (Android, iOS, Windows 11)
+- **Offline Support**: Yes (Service Worker)
+- **File Size**: < 100KB (excluding icons)
 - **Load Time**: < 1 second
 
 ---
 
 ## 🔖 Version History
 
-### v1.0.6 (Current)
+### v1.0.7 (Current)
+- ✅ **New:** Progressive Web App (PWA) support
+- ✅ **New:** Installable as standalone app on all devices
+- ✅ **New:** Offline functionality with service worker
+- ✅ **New:** Smart caching strategy for optimal performance
+- ✅ **New:** PWA manifest configuration (manifest.json)
+- ✅ **New:** Service Worker (sw.js) for offline support and caching
+- ✅ **New:** Cross-platform app icons (180+ icons)
+- ✅ **New:** Android launcher icons (6 sizes)
+- ✅ **New:** iOS app icons (24 sizes)
+- ✅ **New:** Windows 11 tile icons (80 sizes)
+- ✅ **New:** Auto-generated icons using PWABuilder Image Generator
+- ✅ **New:** Background sync capability for future features
+- ✅ **New:** Connection status indicator in settings
+- ✅ **New:** Real-time online/offline status display
+- ✅ **New:** Visual connection indicator with pulsing dot
+- ✅ **New:** Collapsible settings sections (Styling, Connection, Guide/About)
+- ✅ **New:** Cache clearing functionality with data preservation
+- ✅ **New:** Clear App Cache button in Connection section
+- ✅ **New:** Automatic update system for PWA
+- ✅ **New:** Periodic update checks (every 5 minutes)
+- ✅ **New:** Zero-downtime updates with automatic activation
+- ✅ **New:** App version display in Guide & About section
+- ✅ **New:** Last updated date in settings
+- ✅ **New:** Last checked for updates timestamp (real-time)
+- ✅ **Enhanced:** App-like experience on mobile devices
+- ✅ **Enhanced:** Full-screen mode support
+- ✅ **Enhanced:** Better organized settings interface
+- ✅ **Improved:** Faster loading with cached resources
+- ✅ **Improved:** Works offline after first visit
+- ✅ **Improved:** Better connectivity debugging for users
+- ✅ **Improved:** Settings modal UI with categorized sections
+- ✅ **Improved:** Seamless updates without user intervention
+
+### v1.0.6
 - ✅ **New:** Tasks overdue notification system with red styling
 - ✅ **New:** Tasks due today notification system with yellow styling
 - ✅ **New:** Dashboard widget shows "X tasks overdue" counter (red, pulsing)

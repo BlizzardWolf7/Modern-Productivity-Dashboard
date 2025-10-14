@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Minimal Productivity Dashboard</title>
+  <title>Productivity Dashboard</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="description" content="A beautiful, modern productivity dashboard with tasks, notes, weather, and more">
+  <meta name="theme-color" content="#667eea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Dashboard">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/ios/180.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/ios/32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/ios/16.png">
+  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BlizzardWolf7/Toast-Notification-Library@main/toast.css">
   <style>
     :root {
@@ -1309,6 +1321,217 @@
       accent-color: var(--accent);
     }
 
+    .connection-status {
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 10px;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    body.dark .connection-status {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .status-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.4rem 0.75rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .status-indicator.online {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    body.dark .status-indicator.online {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+
+    .status-indicator.offline {
+      background: rgba(239, 68, 68, 0.15);
+      color: #dc2626;
+    }
+
+    body.dark .status-indicator.offline {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    .status-indicator.offline .status-dot {
+      animation: none;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    /* Settings Sections */
+    .settings-section {
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+      background: rgba(102, 126, 234, 0.03);
+    }
+
+    body.dark .settings-section {
+      background: rgba(102, 126, 234, 0.05);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .section-header {
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(102, 126, 234, 0.08);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .section-header:hover {
+      background: rgba(102, 126, 234, 0.12);
+    }
+
+    body.dark .section-header {
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark .section-header:hover {
+      background: rgba(102, 126, 234, 0.15);
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-icon {
+      font-size: 1.2rem;
+    }
+
+    .section-toggle {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      color: var(--text);
+      opacity: 0.6;
+    }
+
+    .settings-section.open .section-toggle {
+      transform: rotate(180deg);
+    }
+
+    .section-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 1rem;
+    }
+
+    .settings-section.open .section-content {
+      max-height: 800px;
+      padding: 1rem;
+    }
+
+    .section-content label {
+      margin-top: 0.75rem;
+    }
+
+    .section-content label:first-child {
+      margin-top: 0;
+    }
+
+    .cache-reset-btn {
+      background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+      margin-top: 0.75rem !important;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .cache-reset-btn:hover {
+      box-shadow: 0 5px 15px rgba(245, 158, 11, 0.4) !important;
+    }
+
+    .app-info {
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    body.dark .app-info {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    body.dark .info-row {
+      border-bottom-color: rgba(102, 126, 234, 0.15);
+    }
+
+    .info-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      opacity: 0.7;
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-family: 'Courier New', monospace;
+    }
+
     .modal-content button {
       margin-top: 1.5rem;
       width: 100%;
@@ -2000,35 +2223,99 @@
   <div id="settingsModal">
     <div class="modal-content">
       <h3>Settings</h3>
-      <label>Dashboard Title:</label>
-      <input type="text" id="dashboardTitle" placeholder="Enter dashboard title" />
       
-      <label>Your Name:</label>
-      <input type="text" id="userName" placeholder="Enter your name" />
-      
-      <label>Accent Color:</label>
-      <input type="color" id="accentColor" />
-      
-      <label>
-        <input type="checkbox" id="darkModeToggle" /> Dark Mode
-      </label>
+      <!-- Styling Section -->
+      <div class="settings-section open" id="stylingSection">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🎨</span>
+            <span>Styling</span>
+          </div>
+          <span class="section-toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <label>Dashboard Title:</label>
+          <input type="text" id="dashboardTitle" placeholder="Enter dashboard title" />
+          
+          <label>Your Name:</label>
+          <input type="text" id="userName" placeholder="Enter your name" />
+          
+          <label>Accent Color:</label>
+          <input type="color" id="accentColor" />
+          
+          <label>
+            <input type="checkbox" id="darkModeToggle" /> Dark Mode
+          </label>
 
-      <label>
-        <input type="checkbox" id="showGreetingToggle" /> Show Greeting
-      </label>
-      
-      <button id="saveSettings">Save</button>
-      
-      <a href="https://github.com/BlizzardWolf7" target="_blank" rel="noopener noreferrer" class="github-link">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-        </svg>
-        View GitHub Profile
-      </a>
+          <label>
+            <input type="checkbox" id="showGreetingToggle" /> Show Greeting
+          </label>
+        </div>
+      </div>
 
-      <button id="shortcutsBtn" class="shortcuts-btn">
-        ⌨️ Keyboard Shortcuts
-      </button>
+      <!-- Connection Section -->
+      <div class="settings-section" id="connectionSection">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">🌐</span>
+            <span>Connection</span>
+          </div>
+          <span class="section-toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <div id="connectionStatus" class="connection-status">
+            <span class="status-label">Status:</span>
+            <span id="statusIndicator" class="status-indicator online">
+              <span class="status-dot"></span>
+              <span class="status-text">Online</span>
+            </span>
+          </div>
+          
+          <button id="clearCacheBtn" class="cache-reset-btn">
+            🗑️ Clear App Cache
+          </button>
+        </div>
+      </div>
+
+      <!-- Guide/About Section -->
+      <div class="settings-section" id="guideSection">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="section-icon">📖</span>
+            <span>Guide & About</span>
+          </div>
+          <span class="section-toggle">▼</span>
+        </div>
+        <div class="section-content">
+          <div class="app-info">
+            <div class="info-row">
+              <span class="info-label">App Version:</span>
+              <span class="info-value">v1.0.7</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Last Updated:</span>
+              <span class="info-value">October 14, 2025</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Last Checked:</span>
+              <span class="info-value" id="lastChecked">Just now</span>
+            </div>
+          </div>
+
+          <a href="https://github.com/BlizzardWolf7" target="_blank" rel="noopener noreferrer" class="github-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            View GitHub Profile
+          </a>
+
+          <button id="shortcutsBtn" class="shortcuts-btn">
+            ⌨️ Keyboard Shortcuts
+          </button>
+        </div>
+      </div>
+      
+      <button id="saveSettings">Save Settings</button>
     </div>
   </div>
 
@@ -3143,6 +3430,62 @@
     };
 
     applySettings();
+
+    /* SETTINGS SECTIONS TOGGLE */
+    document.querySelectorAll('.section-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const section = header.parentElement;
+        section.classList.toggle('open');
+      });
+    });
+
+    /* CLEAR CACHE BUTTON */
+    const clearCacheBtn = document.getElementById('clearCacheBtn');
+    
+    clearCacheBtn.addEventListener('click', async () => {
+      if (!confirm('Clear app cache? This will remove cached files but keep your tasks and notes safe.')) {
+        return;
+      }
+
+      try {
+        // Clear all caches
+        if ('caches' in window) {
+          const cacheNames = await caches.keys();
+          await Promise.all(
+            cacheNames.map(cacheName => caches.delete(cacheName))
+          );
+          
+          console.log('[Cache] All caches cleared successfully');
+          
+          showToast({
+            text: "Cache cleared! The app will reload to fetch fresh content.",
+            type: "success",
+            duration: 3000,
+            position: "top-right"
+          });
+          
+          // Reload after a short delay to show the toast
+          setTimeout(() => {
+            window.location.reload(true);
+          }, 1500);
+        } else {
+          showToast({
+            text: "Cache API not supported in this browser",
+            type: "warning",
+            duration: 3000,
+            position: "top-right"
+          });
+        }
+      } catch (error) {
+        console.error('[Cache] Error clearing cache:', error);
+        showToast({
+          text: "Failed to clear cache. Check console for details.",
+          type: "error",
+          duration: 4000,
+          position: "top-right"
+        });
+      }
+    });
     
     // Welcome toast on page load
     setTimeout(() => {
@@ -3462,6 +3805,149 @@
 
     // Initialize notes
     loadNotes();
+
+    /* PWA SUPPORT */
+    const lastCheckedElement = document.getElementById('lastChecked');
+    
+    // Format time ago
+    function formatTimeAgo(timestamp) {
+      const now = Date.now();
+      const diff = now - timestamp;
+      const seconds = Math.floor(diff / 1000);
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
+      
+      if (seconds < 10) return 'Just now';
+      if (seconds < 60) return `${seconds} seconds ago`;
+      if (minutes === 1) return '1 minute ago';
+      if (minutes < 60) return `${minutes} minutes ago`;
+      if (hours === 1) return '1 hour ago';
+      if (hours < 24) return `${hours} hours ago`;
+      if (days === 1) return '1 day ago';
+      return `${days} days ago`;
+    }
+    
+    // Update last checked time
+    function updateLastChecked() {
+      const timestamp = Date.now();
+      localStorage.setItem('lastUpdateCheck', timestamp.toString());
+      if (lastCheckedElement) {
+        lastCheckedElement.textContent = formatTimeAgo(timestamp);
+      }
+    }
+    
+    // Update the display periodically
+    setInterval(() => {
+      const lastCheck = localStorage.getItem('lastUpdateCheck');
+      if (lastCheck && lastCheckedElement) {
+        lastCheckedElement.textContent = formatTimeAgo(parseInt(lastCheck));
+      }
+    }, 60000); // Update every 60 seconds
+    
+    // Initialize last checked display
+    const lastCheck = localStorage.getItem('lastUpdateCheck');
+    if (lastCheck && lastCheckedElement) {
+      lastCheckedElement.textContent = formatTimeAgo(parseInt(lastCheck));
+    }
+    
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      let refreshing = false;
+      
+      // Reload page when new service worker takes control
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        console.log('[PWA] New service worker activated, reloading...');
+        window.location.reload();
+      });
+      
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('[PWA] Service Worker registered successfully:', registration.scope);
+            
+            // Update last checked on initial load
+            updateLastChecked();
+            
+            // Check for updates periodically (every 5 minutes)
+            setInterval(() => {
+              registration.update();
+              updateLastChecked();
+            }, 300000); // 5 minutes = 300,000ms
+            
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              console.log('[PWA] New service worker detected');
+              
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New service worker available - auto-update
+                  console.log('[PWA] New version available, auto-updating...');
+                  
+                  showToast({
+                    text: "Update found! Installing new version... 🔄",
+                    type: "info",
+                    duration: 3000,
+                    position: "top-right"
+                  });
+                  
+                  // Tell the new service worker to skip waiting and activate immediately
+                  newWorker.postMessage({ type: 'SKIP_WAITING' });
+                }
+              });
+            });
+          })
+          .catch((error) => {
+            console.error('[PWA] Service Worker registration failed:', error);
+          });
+      });
+    }
+
+    /* CONNECTION STATUS */
+    const statusIndicator = document.getElementById("statusIndicator");
+    const statusText = statusIndicator.querySelector(".status-text");
+
+    function updateConnectionStatus() {
+      const isOnline = navigator.onLine;
+      
+      if (isOnline) {
+        statusIndicator.classList.remove("offline");
+        statusIndicator.classList.add("online");
+        statusText.textContent = "Online";
+      } else {
+        statusIndicator.classList.remove("online");
+        statusIndicator.classList.add("offline");
+        statusText.textContent = "Offline";
+      }
+    }
+
+    // Set initial status
+    updateConnectionStatus();
+
+    // Online/Offline detection
+    window.addEventListener('online', () => {
+      updateConnectionStatus();
+      showToast({
+        text: "Back online! 🌐",
+        type: "success",
+        duration: 3000,
+        position: "bottom-right"
+      });
+    });
+
+    window.addEventListener('offline', () => {
+      updateConnectionStatus();
+      showToast({
+        text: "You're offline. Don't worry, the app still works! 📱",
+        type: "warning",
+        duration: 5000,
+        close: true,
+        position: "bottom-right"
+      });
+    });
   </script>
 </body>
 </html>
