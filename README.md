@@ -26,7 +26,12 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 ### 🌤️ **Weather Integration**
 - Real-time weather data using Open-Meteo API (no API key required)
 - **Location detection** with city and country display
-- Temperature and wind speed information
+- **Current weather** - Temperature, humidity, and conditions
+- **Weather conditions** - Visual icons (sunny, rainy, snowy, cloudy, etc.)
+- **30+ weather conditions** - Accurate representation with emoji icons
+- **7-day forecast** - Detailed weather predictions
+- **Forecast details** - Daily high/low temps and precipitation
+- **Weather modal** - Beautiful detailed view with full forecast
 - Automatic geolocation support
 - Styled location badge with pin emoji
 
@@ -302,7 +307,39 @@ The dashboard automatically:
 1. Requests your location permission
 2. Fetches current weather data
 3. Displays city and country name
-4. Updates temperature and wind speed
+4. Shows temperature, humidity, and current conditions
+5. Provides a 7-day weather forecast
+
+**Weather Card Display:**
+- **Temperature** - Current temperature in °C with weather emoji
+- **Condition** - Text description (Clear, Rainy, Snowy, etc.)
+- **Humidity** - Current humidity percentage (💧)
+- **Show Forecast Button** - Opens detailed weather modal
+
+**Weather Forecast Modal:**
+1. Click "🌤️ Show Forecast" on the weather card
+2. View detailed current weather:
+   - Large temperature display
+   - Weather condition
+   - Humidity percentage
+   - Wind speed
+   - Current precipitation
+3. See 7-day forecast with:
+   - Daily weather icons
+   - High and low temperatures
+   - Precipitation amounts (if any)
+   - Day names (Today, Mon, Tue, etc.)
+
+**Weather Conditions:**
+The app recognizes 30+ weather conditions including:
+- ☀️ Clear skies
+- ⛅ Partly cloudy
+- ☁️ Overcast
+- 🌧️ Rain (light, moderate, heavy)
+- ❄️ Snow (light, moderate, heavy)
+- ⛈️ Thunderstorms
+- 🌫️ Fog
+- 🌦️ Showers and drizzle
 
 **No Location Permission?**
 - Weather card will show "Location denied"
@@ -515,11 +552,25 @@ The `index.html` file is organized into:
 **Parameters**:
 - `latitude` - User's latitude
 - `longitude` - User's longitude  
-- `current_weather=true` - Get current weather data
+- `current` - Current weather variables
+  - `temperature_2m` - Temperature at 2 meters
+  - `relative_humidity_2m` - Humidity percentage
+  - `precipitation` - Current precipitation (mm)
+  - `weather_code` - WMO weather code
+  - `wind_speed_10m` - Wind speed at 10 meters (km/h)
+- `daily` - Daily forecast variables
+  - `weather_code` - Daily weather codes
+  - `temperature_2m_max` - Maximum temperature
+  - `temperature_2m_min` - Minimum temperature
+  - `precipitation_sum` - Total precipitation (mm)
+  - `wind_speed_10m_max` - Maximum wind speed
+- `timezone=auto` - Automatic timezone detection
 
 **Response Data Used**:
-- `temperature` - Current temperature in °C
-- `windspeed` - Wind speed in km/h
+- **Current**: temperature, humidity, precipitation, weather code, wind speed
+- **Daily (7-day)**: weather codes, max/min temps, precipitation, wind speed
+
+**Weather Codes**: WMO (World Meteorological Organization) standard codes for 30+ conditions
 
 **Documentation**: [Open-Meteo API Docs](https://open-meteo.com/en/docs)
 
@@ -807,7 +858,7 @@ Dark mode adjusts:
 The update system uses a multi-step process:
 
 1. **Service Worker Versioning** (`sw.js`):
-   - Each version has a unique cache name (e.g., `productivity-dashboard-v1.0.7`)
+   - Each version has a unique cache name (e.g., `productivity-dashboard-v1.0.8`)
    - When you update your code, you change the version number in `sw.js`
 
 2. **Periodic Checks**:
@@ -847,7 +898,7 @@ The update system uses a multi-step process:
 1. Open settings (⚙️ icon in top-right)
 2. Expand the "Guide & About" section (📖)
 3. View app details:
-   - **Version**: Current app version (v1.0.7)
+   - **Version**: Current app version (v1.0.8)
    - **Last Updated**: Date of last app update
    - **Last Checked**: When the app last checked for updates
 
@@ -867,7 +918,6 @@ Potential features for future versions:
 - [ ] Calendar integration
 - [ ] Habit tracker
 - [ ] Daily quotes/motivation
-- [ ] Weather forecast (5-day)
 - [ ] Export/import settings, notes, and lists
 - [ ] Advanced filters (by priority, date, color, completion status)
 - [ ] Sort tasks by priority or due date
@@ -958,160 +1008,9 @@ If you found this project helpful or inspiring:
 
 ---
 
-## 📊 Project Stats
+## 📋 Version History
 
-- **Lines of Code**: ~3,600
-- **Technologies**: 3 (HTML, CSS, JS)
-- **External APIs**: 2
-- **Features**: 20+
-- **Modals**: 8 (Settings, Shortcuts, Search, Todo Overview, Create List, View List, List Settings, Notes Overview, Note Edit)
-- **Keyboard Shortcuts**: 6
-- **Customization Options**: 5 (Title, Name, Greeting, Accent Color, Dark Mode)
-- **Color Options**: 12 (6 for lists, 6 for notes)
-- **Priority Levels**: 4 (None, Low, Medium, High)
-- **Smart Notifications**: Overdue tasks + Tasks due today tracking
-- **PWA Icons**: 180+ (Android, iOS, Windows 11)
-- **Offline Support**: Yes (Service Worker)
-- **File Size**: < 100KB (excluding icons)
-- **Load Time**: < 1 second
-
----
-
-## 🔖 Version History
-
-### v1.0.7 (Current)
-- ✅ **New:** Progressive Web App (PWA) support
-- ✅ **New:** Installable as standalone app on all devices
-- ✅ **New:** Offline functionality with service worker
-- ✅ **New:** Smart caching strategy for optimal performance
-- ✅ **New:** PWA manifest configuration (manifest.json)
-- ✅ **New:** Service Worker (sw.js) for offline support and caching
-- ✅ **New:** Cross-platform app icons (180+ icons)
-- ✅ **New:** Android launcher icons (6 sizes)
-- ✅ **New:** iOS app icons (24 sizes)
-- ✅ **New:** Windows 11 tile icons (80 sizes)
-- ✅ **New:** Auto-generated icons using PWABuilder Image Generator
-- ✅ **New:** Background sync capability for future features
-- ✅ **New:** Connection status indicator in settings
-- ✅ **New:** Real-time online/offline status display
-- ✅ **New:** Visual connection indicator with pulsing dot
-- ✅ **New:** Collapsible settings sections (Styling, Connection, Guide/About)
-- ✅ **New:** Cache clearing functionality with data preservation
-- ✅ **New:** Clear App Cache button in Connection section
-- ✅ **New:** Automatic update system for PWA
-- ✅ **New:** Periodic update checks (every 5 minutes)
-- ✅ **New:** Zero-downtime updates with automatic activation
-- ✅ **New:** App version display in Guide & About section
-- ✅ **New:** Last updated date in settings
-- ✅ **New:** Last checked for updates timestamp (real-time)
-- ✅ **Enhanced:** App-like experience on mobile devices
-- ✅ **Enhanced:** Full-screen mode support
-- ✅ **Enhanced:** Better organized settings interface
-- ✅ **Improved:** Faster loading with cached resources
-- ✅ **Improved:** Works offline after first visit
-- ✅ **Improved:** Better connectivity debugging for users
-- ✅ **Improved:** Settings modal UI with categorized sections
-- ✅ **Improved:** Seamless updates without user intervention
-
-### v1.0.6
-- ✅ **New:** Tasks overdue notification system with red styling
-- ✅ **New:** Tasks due today notification system with yellow styling
-- ✅ **New:** Dashboard widget shows "X tasks overdue" counter (red, pulsing)
-- ✅ **New:** Dashboard widget shows "X tasks due today" counter (yellow, pulsing)
-- ✅ **New:** Lists with overdue tasks highlighted with red gradient
-- ✅ **New:** Lists with tasks due today highlighted with yellow gradient
-- ✅ **New:** Overdue badge on list cards (e.g., "⚠️ 2 overdue") - full-width at bottom
-- ✅ **New:** Due today badge on list cards (e.g., "📅  2 due today") - full-width at bottom
-- ✅ **New:** Priority system - overdue takes visual priority over due today
-- ✅ **Enhanced:** List cards with overdue tasks have red glow effect (highest priority)
-- ✅ **Enhanced:** List cards with due today tasks have golden glow effect
-- ✅ **Enhanced:** Better visual hierarchy for time-sensitive items
-- ✅ **Enhanced:** Badges span full card width for maximum visibility
-- ✅ **Improved:** Only counts incomplete tasks in deadline counters
-- ✅ **Improved:** Badges positioned at bottom for cleaner card layout
-- ✅ **Improved:** Smart highlighting - red overrides yellow when both exist
-
-### v1.0.5
-- ✅ **New:** Toggle greeting visibility in settings
-- ✅ **New:** "Show Greeting" checkbox in settings panel
-- ✅ **New:** Task priority system (None, Low, Medium, High)
-- ✅ **New:** Due date picker for tasks
-- ✅ **New:** Color-coded priority badges (Red, Orange, Blue)
-- ✅ **New:** Smart due date indicators (⚠️ overdue, 📅 today, 📆 upcoming)
-- ✅ **New:** Priority and due date selectors in task creation
-- ✅ **Improved:** Greeting can now be hidden for minimal look
-- ✅ **Improved:** Task structure includes priority and dueDate fields
-- ✅ **Improved:** Search results now display priority and due date badges
-- ✅ **Enhanced:** Greeting setting persists across sessions
-- ✅ **Enhanced:** Tasks display priority and due date badges
-- ✅ **Enhanced:** Overdue tasks highlighted in red (in tasks and search)
-- ✅ **Enhanced:** Today's tasks highlighted in yellow (in tasks and search)
-- ✅ **Enhanced:** Search results show complete task information with colors
-- ✅ **Added:** Default greeting is enabled (backwards compatible)
-
-### v1.0.4
-- ✅ **New:** Global search feature across all tasks and notes
-- ✅ **New:** Search button (🔍) next to settings in top-right
-- ✅ **New:** Real-time search with instant results
-- ✅ **New:** Search highlighting - matching terms highlighted in yellow
-- ✅ **New:** Click search results to open task list or note
-- ✅ **New:** Ctrl+F keyboard shortcut for quick search access
-- ✅ **New:** Organized results by type (Tasks / Notes)
-- ✅ **New:** Result count displayed for each category
-- ✅ **Enhanced:** Search through task titles, task notes, note titles, and note content
-- ✅ **Enhanced:** Shows which list each task belongs to
-- ✅ **Enhanced:** Displays completion status for tasks
-- ✅ **Added:** Search modal with beautiful UI matching dashboard style
-
-### v1.0.3
-- ✅ **Major Update:** Multi-list to-do system with 3-modal workflow
-- ✅ **New:** Create multiple color-coded to-do lists
-- ✅ **New:** Organize tasks by category or project
-- ✅ **New:** Dedicated list creation modal (name + color only)
-- ✅ **New:** Task management modal (primary interface for adding/managing tasks)
-- ✅ **New:** List settings modal (edit name, color, or delete list)
-- ✅ **New:** Task notes field - Add optional notes/context to any task
-- ✅ **New:** Track completion progress per list
-- ✅ **Improved:** Beautiful task input section with contained design
-- ✅ **Improved:** Input fields stack vertically for better UX
-- ✅ **Improved:** Card-style task items with enhanced spacing
-- ✅ **Improved:** Delete button positioned in top-right corner (smaller, cleaner)
-- ✅ **Improved:** Cleaner separation between list creation and task management
-- ✅ **Improved:** Settings icon (⚙️) for list properties
-- ✅ **Enhanced:** Task management is now the primary focus when viewing a list
-- ✅ **Enhanced:** Tasks display title + note in card layout with more space
-- ✅ **Enhanced:** Delete button appears on hover for cleaner look
-- ✅ **Enhanced:** Better shadows and hover effects on tasks
-- ✅ **Added:** 6 color options for lists
-
-### v1.0.2
-- ✅ **New:** Note-taking widget with full CRUD functionality
-- ✅ **New:** Color-coded sticky notes (6 colors)
-- ✅ **New:** Beautiful sticky note cards with title and preview
-- ✅ **New:** Note editor modal with rich editing features
-- ✅ **New:** Auto-save notes to localStorage
-- ✅ **Added:** Notes counter on dashboard
-- ✅ **Enhanced:** Smooth animations for 4th card
-
-### v1.0.1
-- ✅ **New:** Dedicated keyboard shortcuts modal
-- ✅ **New:** Ctrl+K shortcut to open shortcuts guide
-- ✅ **Improved:** Keyboard shortcuts now in separate modal
-- ✅ **Enhanced:** Better modal management (Escape closes any modal)
-- ✅ **Added:** Shortcuts button in settings panel
-
-### v1.0.0
-- ✅ Initial release
-- ✅ Real-time clock
-- ✅ Weather integration
-- ✅ To-do list functionality
-- ✅ Settings customization
-- ✅ Dark mode support
-- ✅ Toast notifications
-- ✅ Location detection (city & country)
-- ✅ Smooth animations
-- ✅ Responsive design
-- ✅ Social links integration
+For detailed version history and changelog, see [CHANGELOG.md](CHANGELOG.md).
 
 ---
 

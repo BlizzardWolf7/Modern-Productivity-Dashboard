@@ -213,6 +213,25 @@
       background: rgba(102, 126, 234, 0.15);
     }
 
+    .weather-btn {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 1rem;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .weather-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
     /* To-Do Widget */
     .todo-widget {
       text-align: center;
@@ -2127,6 +2146,209 @@
       background: rgba(102, 126, 234, 0.15);
     }
 
+    /* Weather Modal */
+    #weatherModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 1002;
+    }
+
+    #weatherModal.active {
+      display: flex;
+    }
+
+    .weather-modal {
+      max-width: 800px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .current-weather-detailed {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    body.dark .current-weather-detailed {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+      border-color: rgba(102, 126, 234, 0.3);
+    }
+
+    .weather-location {
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+
+    .weather-current-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .weather-temp-large {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .weather-temp-large > span:first-child {
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    body.dark .weather-temp-large > span:first-child {
+      background: linear-gradient(135deg, #667eea, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .weather-condition-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    .weather-details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+
+    .weather-detail-item {
+      background: var(--card-bg);
+      padding: 0.75rem;
+      border-radius: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      border: 1px solid rgba(102, 126, 234, 0.15);
+    }
+
+    body.dark .weather-detail-item {
+      background: rgba(45, 55, 72, 0.5);
+      border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      opacity: 0.7;
+      color: var(--text);
+    }
+
+    .detail-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .forecast-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .forecast-section h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text);
+      opacity: 0.9;
+    }
+
+    .forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .forecast-day {
+      background: rgba(102, 126, 234, 0.08);
+      border-radius: 12px;
+      padding: 1rem 0.75rem;
+      text-align: center;
+      border: 2px solid rgba(102, 126, 234, 0.15);
+      transition: all 0.2s ease;
+    }
+
+    .forecast-day:hover {
+      background: rgba(102, 126, 234, 0.12);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+
+    body.dark .forecast-day {
+      background: rgba(102, 126, 234, 0.12);
+      border-color: rgba(102, 126, 234, 0.2);
+    }
+
+    body.dark .forecast-day:hover {
+      background: rgba(102, 126, 234, 0.18);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .forecast-date {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+
+    .forecast-icon {
+      font-size: 2rem;
+      margin: 0.5rem 0;
+    }
+
+    .forecast-temps {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .forecast-temp-max {
+      color: var(--text);
+    }
+
+    .forecast-temp-min {
+      color: var(--text);
+      opacity: 0.5;
+    }
+
+    .forecast-precip {
+      font-size: 0.7rem;
+      margin-top: 0.35rem;
+      color: #3b82f6;
+      font-weight: 600;
+    }
+
     footer {
       margin-top: 3rem;
       font-size: 0.9rem;
@@ -2193,8 +2415,9 @@
     <div class="card">
       <div class="weather">
         <h2>Weather</h2>
-        <p id="weather">Loading...</p>
+        <div id="weather">Loading...</div>
         <small id="location"></small>
+        <button id="showWeatherBtn" class="weather-btn" style="display: none;">🌤️ Show Forecast</button>
       </div>
     </div>
 
@@ -2290,7 +2513,7 @@
           <div class="app-info">
             <div class="info-row">
               <span class="info-label">App Version:</span>
-              <span class="info-value">v1.0.7</span>
+              <span class="info-value" id="appVersion">v1.0.8</span>
             </div>
             <div class="info-row">
               <span class="info-label">Last Updated:</span>
@@ -2542,6 +2765,49 @@
     </div>
   </div>
 
+  <!-- Weather Details Modal -->
+  <div id="weatherModal">
+    <div class="modal-content weather-modal">
+      <h3>🌤️ Weather Forecast</h3>
+      
+      <div class="current-weather-detailed">
+        <div class="weather-location" id="weatherLocationDetailed">
+          <span id="weatherCityDetailed">Loading...</span>
+        </div>
+        
+        <div class="weather-current-info">
+          <div class="weather-temp-large">
+            <span id="weatherTempLarge">--°C</span>
+            <span id="weatherConditionLarge" class="weather-condition-text">--</span>
+          </div>
+          <div class="weather-details-grid">
+            <div class="weather-detail-item">
+              <span class="detail-label">💧 Humidity</span>
+              <span class="detail-value" id="weatherHumidityDetail">--%</span>
+            </div>
+            <div class="weather-detail-item">
+              <span class="detail-label">💨 Wind Speed</span>
+              <span class="detail-value" id="weatherWindDetail">-- km/h</span>
+            </div>
+            <div class="weather-detail-item">
+              <span class="detail-label">🌧️ Precipitation</span>
+              <span class="detail-value" id="weatherPrecipDetail">-- mm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="forecast-section">
+        <h4>7-Day Forecast</h4>
+        <div id="forecastContainer" class="forecast-grid">
+          <!-- Forecast days will be added here -->
+        </div>
+      </div>
+      
+      <button id="closeWeatherBtn" class="modal-close-btn">Close</button>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/gh/BlizzardWolf7/Toast-Notification-Library@main/toast.js"></script>
   <script>
     /* CLOCK */
@@ -2553,7 +2819,9 @@
     updateClock();
 
     /* WEATHER (Open-Meteo, no API key) */
-    let locationData = { city: "", country: "" };
+    let locationData = { city: "", country: "", lat: 0, lon: 0 };
+    let weatherData = null;
+    let forecastData = null;
     
     function getLocation(lat, lon) {
       // Reverse geocoding to get city and country
@@ -2562,7 +2830,7 @@
         .then(data => {
           const city = data.city || data.locality || data.principalSubdivision || "Unknown";
           const country = data.countryName || "Unknown";
-          locationData = { city, country };
+          locationData = { city, country, lat, lon };
           document.getElementById("location").textContent = `📍 ${city}, ${country}`;
         })
         .catch(() => {
@@ -2570,18 +2838,66 @@
         });
     }
 
+    // Weather code to condition mapping
+    function getWeatherCondition(code) {
+      const conditions = {
+        0: { text: 'Clear', emoji: '☀️' },
+        1: { text: 'Mainly Clear', emoji: '🌤️' },
+        2: { text: 'Partly Cloudy', emoji: '⛅' },
+        3: { text: 'Overcast', emoji: '☁️' },
+        45: { text: 'Foggy', emoji: '🌫️' },
+        48: { text: 'Foggy', emoji: '🌫️' },
+        51: { text: 'Light Drizzle', emoji: '🌦️' },
+        53: { text: 'Drizzle', emoji: '🌦️' },
+        55: { text: 'Heavy Drizzle', emoji: '🌧️' },
+        56: { text: 'Freezing Drizzle', emoji: '🌧️' },
+        57: { text: 'Freezing Drizzle', emoji: '🌧️' },
+        61: { text: 'Light Rain', emoji: '🌧️' },
+        63: { text: 'Rain', emoji: '🌧️' },
+        65: { text: 'Heavy Rain', emoji: '⛈️' },
+        66: { text: 'Freezing Rain', emoji: '🌧️' },
+        67: { text: 'Freezing Rain', emoji: '🌧️' },
+        71: { text: 'Light Snow', emoji: '🌨️' },
+        73: { text: 'Snow', emoji: '❄️' },
+        75: { text: 'Heavy Snow', emoji: '❄️' },
+        77: { text: 'Snow Grains', emoji: '🌨️' },
+        80: { text: 'Light Showers', emoji: '🌦️' },
+        81: { text: 'Showers', emoji: '🌧️' },
+        82: { text: 'Heavy Showers', emoji: '⛈️' },
+        85: { text: 'Snow Showers', emoji: '🌨️' },
+        86: { text: 'Heavy Snow', emoji: '❄️' },
+        95: { text: 'Thunderstorm', emoji: '⛈️' },
+        96: { text: 'Thunderstorm', emoji: '⛈️' },
+        99: { text: 'Thunderstorm', emoji: '⛈️' }
+      };
+      return conditions[code] || { text: 'Unknown', emoji: '🌡️' };
+    }
+
     function getWeather(lat, lon) {
       // Get location name
       getLocation(lat, lon);
       
-      // Get weather data
-      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+      // Get current weather + 7-day forecast
+      fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max&timezone=auto`)
         .then(res => res.json())
         .then(data => {
-          const w = data.current_weather;
-          document.getElementById("weather").textContent = `${w.temperature}°C, ${w.windspeed} km/h wind`;
+          // Store full weather data
+          weatherData = data.current;
+          forecastData = data.daily;
           
-          // Show combined weather and location toast only on error
+          // Display current weather
+          const temp = Math.round(weatherData.temperature_2m);
+          const humidity = weatherData.relative_humidity_2m;
+          const condition = getWeatherCondition(weatherData.weather_code);
+          
+          document.getElementById("weather").innerHTML = `
+            <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">${condition.emoji} ${temp}°C</div>
+            <div style="font-size: 0.9rem; opacity: 0.8;">${condition.text}</div>
+            <div style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem; margin-bottom: 0.5rem;">💧 ${humidity}%</div>
+          `;
+          
+          // Show the "Show Forecast" button
+          document.getElementById("showWeatherBtn").style.display = "block";
         })
         .catch(() => {
           document.getElementById("weather").textContent = "Weather unavailable.";
@@ -2593,6 +2909,103 @@
           });
         });
     }
+
+    /* WEATHER MODAL */
+    const showWeatherBtn = document.getElementById("showWeatherBtn");
+    const weatherModal = document.getElementById("weatherModal");
+    const closeWeatherBtn = document.getElementById("closeWeatherBtn");
+
+    // Open weather modal
+    showWeatherBtn.onclick = () => {
+      if (!weatherData || !forecastData) {
+        showToast({
+          text: "Weather data not available",
+          type: "warning",
+          duration: 2500,
+          position: "bottom-right"
+        });
+        return;
+      }
+      
+      displayWeatherDetails();
+      weatherModal.classList.add("active");
+    };
+
+    // Close weather modal
+    closeWeatherBtn.onclick = () => {
+      weatherModal.classList.remove("active");
+    };
+
+    weatherModal.onclick = (e) => {
+      if (e.target === weatherModal) {
+        weatherModal.classList.remove("active");
+      }
+    };
+
+    // Display detailed weather information
+    function displayWeatherDetails() {
+      if (!weatherData || !forecastData) return;
+
+      // Update location
+      document.getElementById("weatherCityDetailed").textContent = 
+        `📍 ${locationData.city}, ${locationData.country}`;
+
+      // Update current weather details
+      const temp = Math.round(weatherData.temperature_2m);
+      const condition = getWeatherCondition(weatherData.weather_code);
+      
+      document.getElementById("weatherTempLarge").textContent = `${temp}°C`;
+      document.getElementById("weatherConditionLarge").textContent = condition.text;
+      document.getElementById("weatherHumidityDetail").textContent = `${weatherData.relative_humidity_2m}%`;
+      document.getElementById("weatherWindDetail").textContent = `${Math.round(weatherData.wind_speed_10m)} km/h`;
+      document.getElementById("weatherPrecipDetail").textContent = `${weatherData.precipitation || 0} mm`;
+
+      // Display 7-day forecast
+      displayForecast();
+    }
+
+    // Display 7-day forecast
+    function displayForecast() {
+      if (!forecastData) return;
+
+      const forecastContainer = document.getElementById("forecastContainer");
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      
+      // Generate forecast cards for next 7 days
+      let forecastHTML = '';
+      
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(forecastData.time[i]);
+        const dayName = i === 0 ? 'Today' : days[date.getDay()];
+        const condition = getWeatherCondition(forecastData.weather_code[i]);
+        const tempMax = Math.round(forecastData.temperature_2m_max[i]);
+        const tempMin = Math.round(forecastData.temperature_2m_min[i]);
+        const precip = forecastData.precipitation_sum[i] || 0;
+        
+        forecastHTML += `
+          <div class="forecast-day">
+            <div class="forecast-date">${dayName}</div>
+            <div class="forecast-icon">${condition.emoji}</div>
+            <div class="forecast-temps">
+              <span class="forecast-temp-max">${tempMax}°</span>
+              <span class="forecast-temp-min">${tempMin}°</span>
+            </div>
+            ${precip > 0 ? `<div class="forecast-precip">💧 ${precip.toFixed(1)}mm</div>` : ''}
+          </div>
+        `;
+      }
+      
+      forecastContainer.innerHTML = forecastHTML;
+    }
+
+    // Close weather modal with Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        if (weatherModal.classList.contains("active")) {
+          weatherModal.classList.remove("active");
+        }
+      }
+    });
 
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
