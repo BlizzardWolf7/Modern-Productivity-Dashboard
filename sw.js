@@ -1,7 +1,7 @@
 // Service Worker for Productivity Dashboard
 // Version 1.0.8
 
-const CACHE_NAME = 'productivity-dashboard-v1.0.8';
+const CACHE_NAME = 'productivity-dashboard-v1.0.9';
 const urlsToCache = [
   '/',
   '/index.html',

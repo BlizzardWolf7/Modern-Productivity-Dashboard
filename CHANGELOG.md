@@ -7,7 +7,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.8] - Current
+## [1.0.9] - Current
+
+### ✨ Added
+- Advanced task sorting system with multiple options
+- Sort by priority (High → Low)
+- Sort by due date (Soonest first or Latest first)
+- Sort by creation date (Newest first or Oldest first)
+- Drag-and-drop task reordering functionality
+- Visual drag handles (⋮⋮) on task items
+- Smooth drag-and-drop animations and feedback
+- Recurring tasks with 4 interval options (Daily, Weekly, Monthly, Yearly)
+- Automatic recurring task generation when completed
+- Recurring task badges with interval icons (🔄📅📆🗓️)
+- Toggle to show/hide recurring tasks
+- Enhanced task controls panel with sorting and filtering options
+- Task creation timestamps for better organization
+- Unique task IDs for improved data management
+- Enhanced search functionality with comprehensive task information
+- Search by recurring status (daily, weekly, monthly, yearly)
+- Search by creation date and time
+- Display creation timestamps in search results
+- Display recurring task indicators in search results
+- Display unique task IDs in search results for reference
+- Advanced search filtering system with type-based filters
+- Search type filters (All, Tasks, Notes) with radio button selection
+- Task-specific advanced filters (Priority, Due Date, Completion, List Color, Recurring)
+- Note-specific advanced filters (Color)
+- Dynamic filter interface that shows relevant filters based on search type
+- Real-time filter application with instant search results update
+- Filter reset functionality when closing search modal
+
+### 🔧 Enhanced
+- Task list interface with comprehensive control panel
+- Task metadata display with recurring indicators
+- Drag-and-drop visual feedback with rotation and opacity effects
+- Improved task completion workflow for recurring tasks
+- Better task organization and management capabilities
+- Search results display with comprehensive task information
+- Search functionality with expanded searchable fields
+- Search interface with advanced filtering capabilities
+- Filter controls with intuitive radio button and dropdown selections
+
+### 🚀 Improved
+- Task management workflow with multiple sorting options
+- User experience with intuitive drag-and-drop reordering
+- Productivity with automatic recurring task generation
+- Task visibility with filtering options
+- Data persistence with unique task identification
+- Search experience with comprehensive task information display
+- Task discovery with enhanced search capabilities
+- Search workflow with advanced filtering options
+- Content discovery with type-specific filter controls
+
+---
+
+## [1.0.8]
 
 ### ✨ Added
 - Enhanced weather system with detailed conditions

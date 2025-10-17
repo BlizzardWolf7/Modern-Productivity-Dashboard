@@ -43,6 +43,12 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - **Task notes** - Add optional notes/context to any task
 - **Task priorities** - Set Low, Medium, or High priority with color-coded badges
 - **Due dates** - Set optional due dates with smart indicators (overdue, today, upcoming)
+- **Advanced sorting** - Sort by priority, due date, or creation date (ascending/descending)
+- **Drag-and-drop reordering** - Intuitive task reordering with visual feedback
+- **Recurring tasks** - Set tasks to repeat daily, weekly, monthly, or yearly
+- **Automatic task generation** - Recurring tasks create new instances when completed
+- **Task filtering** - Toggle to show/hide recurring tasks
+- **Enhanced search integration** - Search results show comprehensive task information including recurring status, creation dates, and unique IDs
 - **Overdue notifications** - Dashboard shows count of overdue tasks with red pulsing animation
 - **Due today notifications** - Dashboard shows count of tasks due today with yellow pulsing animation
 - **Smart list highlighting** - Lists with urgent tasks highlighted (red for overdue, yellow for due today)
@@ -79,14 +85,24 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 ### 🔍 **Global Search**
 - **Search across everything** - Find tasks and notes instantly
 - **Real-time results** - See matches as you type
+- **Advanced filtering system** - Filter by content type and specific criteria
+- **Search type filters** - Choose to search All, Tasks only, or Notes only
+- **Task-specific filters** - Filter by priority, due date, completion status, list color, and recurring status
+- **Note-specific filters** - Filter notes by color
+- **Common filters** - Filter by creation date (today, yesterday, this week, etc.) when searching all content
+- **Dynamic filter interface** - Shows relevant filters based on selected search type
 - **Keyword highlighting** - Search terms highlighted in yellow
 - **Smart categorization** - Results organized by Tasks and Notes
 - **Quick navigation** - Click any result to open it
 - **Completion status** - See if tasks are done or pending
 - **Priority badges** - Color-coded priority indicators in search results
 - **Due date badges** - Smart date display with overdue/today warnings
+- **Recurring indicators** - Visual badges showing recurring task intervals
+- **Creation timestamps** - See when tasks and notes were created
+- **Unique task IDs** - Reference IDs for advanced task management
 - **List context** - Shows which list each task belongs to
 - **Ctrl+F shortcut** - Quick access with keyboard
+- **Filter reset** - All filters reset when closing search modal
 
 ### ⌨️ **Keyboard Shortcuts**
 - **Dedicated shortcuts modal** - Beautiful guide with modern key visualizations
@@ -858,7 +874,7 @@ Dark mode adjusts:
 The update system uses a multi-step process:
 
 1. **Service Worker Versioning** (`sw.js`):
-   - Each version has a unique cache name (e.g., `productivity-dashboard-v1.0.8`)
+   - Each version has a unique cache name (e.g., `productivity-dashboard-v1.0.9`)
    - When you update your code, you change the version number in `sw.js`
 
 2. **Periodic Checks**:
@@ -898,7 +914,7 @@ The update system uses a multi-step process:
 1. Open settings (⚙️ icon in top-right)
 2. Expand the "Guide & About" section (📖)
 3. View app details:
-   - **Version**: Current app version (v1.0.8)
+   - **Version**: Current app version (v1.0.9)
    - **Last Updated**: Date of last app update
    - **Last Checked**: When the app last checked for updates
 
@@ -912,23 +928,72 @@ The update system uses a multi-step process:
 
 ## 🚀 Future Enhancements
 
-Potential features for future versions:
+### 🎯 **Core Productivity Features**
+- [ ] **Pomodoro Timer Integration** - Built-in focus timer with break reminders
+- [ ] **Calendar Integration** - Sync with Google Calendar, Outlook, or Apple Calendar
+- [ ] **Habit Tracker** - Daily habit tracking with streak counters and analytics
+- [ ] **Time Tracking** - Track time spent on tasks and projects
+- [ ] **Goal Setting** - Set and track short-term and long-term goals
+- [ ] **Daily Quotes/Motivation** - Inspirational quotes and motivational content
+- [ ] **Task Reminders/Notifications** - Browser notifications for due tasks
 
-- [ ] Pomodoro timer integration
-- [ ] Calendar integration
-- [ ] Habit tracker
-- [ ] Daily quotes/motivation
-- [ ] Export/import settings, notes, and lists
-- [ ] Advanced filters (by priority, date, color, completion status)
-- [ ] Sort tasks by priority or due date
-- [ ] Drag-and-drop task reordering
-- [ ] List templates (e.g., "Weekly Shopping", "Project Plan")
-- [ ] Recurring tasks
-- [ ] Task reminders/notifications
-- [ ] Custom background images
-- [ ] More widget options
-- [ ] Enhanced PWA features (push notifications, background refresh)
-- [ ] Sync across devices (cloud storage)
+### 📊 **Data & Analytics**
+- [ ] **Productivity Analytics** - Charts showing task completion trends
+- [ ] **Habit Analytics** - Track habit streaks and success rates
+- [ ] **Export/Import Data** - Backup and restore settings, notes, and lists
+- [ ] **Data Visualization** - Interactive charts and graphs for insights
+
+### 🎨 **Customization & Personalization**
+- [ ] **Custom Background Images** - Upload personal photos or choose from gallery
+- [ ] **Theme Customization** - Create custom color schemes and themes
+- [ ] **Widget Layout Editor** - Drag-and-drop widget arrangement
+- [ ] **Custom Widgets** - User-defined widgets for specific needs
+- [ ] **Font Customization** - Choose from different font families and sizes
+- [ ] **Layout Presets** - Quick layout switching (minimal, detailed, focused)
+
+### 🔧 **Advanced Features**
+- [ ] **List Templates** - Pre-built templates (Weekly Shopping, Project Plan, etc.)
+- [ ] **Task Dependencies** - Link tasks that depend on each other
+- [ ] **Sub-tasks** - Break down complex tasks into smaller components
+- [ ] **Task Templates** - Reusable task structures for common activities
+- [ ] **Bulk Operations** - Select and modify multiple tasks at once
+- [ ] **Advanced Search Filters** - More granular filtering options
+
+### 🌐 **Integration & Sync**
+- [ ] **Cloud Sync** - Sync data across devices using cloud storage
+- [ ] **Third-party Integrations** - Connect with Trello, Asana, Notion, etc.
+- [ ] **API Support** - Allow external apps to interact with the dashboard
+- [ ] **Webhook Support** - Real-time updates from external services
+- [ ] **Import from Other Apps** - Migrate data from existing productivity tools
+
+### 📱 **Mobile & PWA Enhancements**
+- [ ] **Enhanced PWA Features** - Push notifications, background refresh
+- [ ] **Offline Mode Improvements** - Better offline functionality
+- [ ] **Mobile Gestures** - Swipe actions for quick task management
+- [ ] **Voice Commands** - Add tasks using voice input
+- [ ] **Camera Integration** - Scan documents or capture quick notes
+- [ ] **Location-based Reminders** - Tasks triggered by location
+
+### 🔒 **Security & Privacy**
+- [ ] **Data Encryption** - Encrypt sensitive data locally
+- [ ] **Secure Backup** - Encrypted cloud backup options
+- [ ] **Two-Factor Authentication** - Enhanced security for cloud sync
+
+### 🌍 **Accessibility & Internationalization**
+- [ ] **Multi-language Support** - Support for multiple languages
+- [ ] **Accessibility Improvements** - Screen reader support, keyboard navigation
+- [ ] **High Contrast Mode** - Better visibility for users with visual impairments
+- [ ] **Font Size Scaling** - Dynamic font size adjustment
+- [ ] **Voice Feedback** - Audio feedback for actions
+- [ ] **RTL Support** - Right-to-left language support
+
+### 🔧 **Developer & Power User Features**
+- [ ] **Plugin System** - Allow third-party extensions
+- [ ] **Custom Scripts** - JavaScript automation for power users
+- [ ] **Developer Tools** - Built-in debugging and development tools
+- [ ] **API Documentation** - Comprehensive API documentation
+- [ ] **Webhook Testing** - Built-in webhook testing tools
+- [ ] **Performance Monitoring** - Built-in performance analytics
 
 ---
 

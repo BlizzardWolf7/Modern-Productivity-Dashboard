@@ -683,6 +683,69 @@
       transform: translateY(0);
     }
 
+    .task-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 10px;
+      border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark .task-controls {
+      background: rgba(102, 126, 234, 0.08);
+      border-color: rgba(102, 126, 234, 0.15);
+    }
+
+    .sort-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sort-controls label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    .task-sort-select {
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .task-sort-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.15);
+    }
+
+    .recurring-toggle label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .recurring-toggle input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+
     .task-options {
       display: flex;
       gap: 0.75rem;
@@ -748,6 +811,45 @@
       border-left: 4px solid var(--accent);
       transition: all 0.2s ease;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      cursor: grab;
+      user-select: none;
+    }
+
+    .view-list-tasks li:active {
+      cursor: grabbing;
+    }
+
+    .view-list-tasks li.dragging {
+      opacity: 0.5;
+      transform: rotate(5deg);
+      z-index: 1000;
+    }
+
+    .view-list-tasks li.drag-over {
+      border-top: 3px solid var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .drag-handle {
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(102, 126, 234, 0.4);
+      font-size: 1.2rem;
+      cursor: grab;
+      padding: 0.25rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .drag-handle:hover {
+      color: var(--accent);
+      background: rgba(102, 126, 234, 0.1);
+    }
+
+    .drag-handle:active {
+      cursor: grabbing;
     }
 
     .view-list-tasks li:hover {
@@ -809,7 +911,8 @@
     }
 
     .priority-badge,
-    .due-date-badge {
+    .due-date-badge,
+    .recurring-badge {
       font-size: 0.7rem;
       font-weight: 600;
       padding: 0.25rem 0.6rem;
@@ -859,6 +962,14 @@
 
     body.dark .due-date-badge.today {
       color: #78350f;
+    }
+
+    .recurring-badge {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
     }
 
     .view-list-tasks li span.done .task-metadata {
@@ -1085,6 +1196,104 @@
       width: 90%;
       max-height: 85vh;
       overflow-y: auto;
+    }
+
+    .search-filters {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(102, 126, 234, 0.05);
+      border-radius: 10px;
+      border: 1px solid rgba(102, 126, 234, 0.1);
+    }
+
+    body.dark .search-filters {
+      background: rgba(102, 126, 234, 0.08);
+      border-color: rgba(102, 126, 234, 0.15);
+    }
+
+    .filter-section {
+      margin-bottom: 1rem;
+    }
+
+    .filter-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .filter-section label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .filter-options {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .filter-option input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+
+    .advanced-filter-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .filter-row label {
+      min-width: 80px;
+      font-size: 0.8rem;
+      margin-bottom: 0;
+    }
+
+    .filter-select {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid rgba(102, 126, 234, 0.2);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.15);
+    }
+
+    body.dark .filter-select {
+      background: rgba(45, 55, 72, 0.8);
     }
 
     .search-modal input[type="text"] {
@@ -2513,11 +2722,11 @@
           <div class="app-info">
             <div class="info-row">
               <span class="info-label">App Version:</span>
-              <span class="info-value" id="appVersion">v1.0.8</span>
+              <span class="info-value" id="appVersion">v1.0.9</span>
             </div>
             <div class="info-row">
               <span class="info-label">Last Updated:</span>
-              <span class="info-value">October 14, 2025</span>
+              <span class="info-value">October 17, 2025</span>
             </div>
             <div class="info-row">
               <span class="info-label">Last Checked:</span>
@@ -2650,6 +2859,25 @@
         <span id="taskProgress">0/0 completed</span>
       </div>
 
+      <div class="task-controls">
+        <div class="sort-controls">
+          <label>Sort by:</label>
+          <select id="taskSortSelect" class="task-sort-select">
+            <option value="none">No sorting</option>
+            <option value="priority">Priority (High → Low)</option>
+            <option value="dueDate">Due Date (Soonest first)</option>
+            <option value="dueDateDesc">Due Date (Latest first)</option>
+            <option value="created">Created (Newest first)</option>
+            <option value="createdDesc">Created (Oldest first)</option>
+          </select>
+        </div>
+        <div class="recurring-toggle">
+          <label>
+            <input type="checkbox" id="showRecurringToggle" /> Show recurring tasks
+          </label>
+        </div>
+      </div>
+
       <div class="add-task-section">
         <input type="text" id="viewListTaskInput" placeholder="Task title..." />
         <input type="text" id="viewListTaskNote" placeholder="Optional note..." class="task-note-input" />
@@ -2667,6 +2895,16 @@
           <div class="task-option">
             <label>Due Date:</label>
             <input type="date" id="taskDueDate" class="task-date" />
+          </div>
+          <div class="task-option">
+            <label>Recurring:</label>
+            <select id="taskRecurring" class="task-select">
+              <option value="none">None</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
           </div>
         </div>
         
@@ -2713,12 +2951,122 @@
   <div id="searchModal">
     <div class="modal-content search-modal">
       <h3>🔍 Search</h3>
-      <input type="text" id="searchInput" placeholder="Search tasks and notes..." autofocus />
+      <input type="text" id="searchInput" placeholder="Search tasks, notes, recurring status, creation dates..." autofocus />
+      
+      <!-- Search Filters -->
+      <div class="search-filters">
+        <div class="filter-section">
+          <label>Search Type:</label>
+          <div class="filter-options">
+            <label class="filter-option">
+              <input type="radio" name="searchType" value="all" checked />
+              <span>All</span>
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="searchType" value="tasks" />
+              <span>Tasks</span>
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="searchType" value="notes" />
+              <span>Notes</span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="filter-section" id="advancedFilters">
+          <label>Advanced Filters:</label>
+          <div class="advanced-filter-controls">
+            <!-- Task Filters -->
+            <div class="filter-group" id="taskFilters" style="display: none;">
+              <div class="filter-row">
+                <label>Priority:</label>
+                <select id="filterPriority" class="filter-select">
+                  <option value="">All Priorities</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                  <option value="none">None</option>
+                </select>
+              </div>
+              <div class="filter-row">
+                <label>Due Date:</label>
+                <select id="filterDueDate" class="filter-select">
+                  <option value="">All Dates</option>
+                  <option value="overdue">Overdue</option>
+                  <option value="today">Due Today</option>
+                  <option value="upcoming">Upcoming</option>
+                  <option value="nodate">No Due Date</option>
+                </select>
+              </div>
+              <div class="filter-row">
+                <label>Completion:</label>
+                <select id="filterCompletion" class="filter-select">
+                  <option value="">All Tasks</option>
+                  <option value="completed">Completed</option>
+                  <option value="incomplete">Incomplete</option>
+                </select>
+              </div>
+              <div class="filter-row">
+                <label>List Color:</label>
+                <select id="filterListColor" class="filter-select">
+                  <option value="">All Colors</option>
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="purple">Purple</option>
+                  <option value="orange">Orange</option>
+                  <option value="pink">Pink</option>
+                  <option value="red">Red</option>
+                </select>
+              </div>
+              <div class="filter-row">
+                <label>Recurring:</label>
+                <select id="filterRecurring" class="filter-select">
+                  <option value="">All Tasks</option>
+                  <option value="recurring">Recurring Only</option>
+                  <option value="non-recurring">Non-Recurring Only</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- Note Filters -->
+            <div class="filter-group" id="noteFilters" style="display: none;">
+              <div class="filter-row">
+                <label>Color:</label>
+                <select id="filterNoteColor" class="filter-select">
+                  <option value="">All Colors</option>
+                  <option value="yellow">Yellow</option>
+                  <option value="pink">Pink</option>
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="purple">Purple</option>
+                  <option value="orange">Orange</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- Common Filters (for All type) -->
+            <div class="filter-group" id="commonFilters" style="display: none;">
+              <div class="filter-row">
+                <label>Created:</label>
+                <select id="filterCreatedDate" class="filter-select">
+                  <option value="">All Dates</option>
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
+                  <option value="thisweek">This Week</option>
+                  <option value="lastweek">Last Week</option>
+                  <option value="thismonth">This Month</option>
+                  <option value="lastmonth">Last Month</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       
       <div id="searchResults" class="search-results">
         <div class="search-empty">
           <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
-          <p>Type to search across all tasks and notes</p>
+          <p>Type to search across all tasks, notes, recurring status, and creation dates</p>
         </div>
       </div>
       
@@ -3306,15 +3654,54 @@
       const list = todoLists.find(l => l.id === currentListId);
       if (!list) return;
 
-      const completedCount = list.tasks.filter(t => t.done).length;
-      taskProgress.textContent = `${completedCount}/${list.tasks.length} completed`;
+      // Get sorting preference
+      const sortBy = taskSortSelect.value;
+      const showRecurring = showRecurringToggle.checked;
+      
+      // Filter and sort tasks
+      let tasksToShow = [...list.tasks];
+      
+      // Filter recurring tasks if needed
+      if (!showRecurring) {
+        tasksToShow = tasksToShow.filter(task => !task.recurring);
+      }
+      
+      // Sort tasks
+      if (sortBy !== 'none') {
+        tasksToShow.sort((a, b) => {
+          switch (sortBy) {
+            case 'priority':
+              const priorityOrder = { 'high': 3, 'medium': 2, 'low': 1, 'none': 0 };
+              return priorityOrder[b.priority] - priorityOrder[a.priority];
+            case 'dueDate':
+              if (!a.dueDate && !b.dueDate) return 0;
+              if (!a.dueDate) return 1;
+              if (!b.dueDate) return -1;
+              return new Date(a.dueDate) - new Date(b.dueDate);
+            case 'dueDateDesc':
+              if (!a.dueDate && !b.dueDate) return 0;
+              if (!a.dueDate) return -1;
+              if (!b.dueDate) return 1;
+              return new Date(b.dueDate) - new Date(a.dueDate);
+            case 'created':
+              return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+            case 'createdDesc':
+              return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+            default:
+              return 0;
+          }
+        });
+      }
 
-      if (list.tasks.length === 0) {
+      const completedCount = tasksToShow.filter(t => t.done).length;
+      taskProgress.textContent = `${completedCount}/${tasksToShow.length} completed`;
+
+      if (tasksToShow.length === 0) {
         viewListTasks.innerHTML = '<div class="empty-tasks">No tasks yet. Add your first task above!</div>';
         return;
       }
 
-      viewListTasks.innerHTML = list.tasks.map((task, index) => {
+      viewListTasks.innerHTML = tasksToShow.map((task, originalIndex) => {
         const noteHtml = task.note ? `<div class="task-note">${task.note}</div>` : '';
         
         // Build metadata badges
@@ -3327,43 +3714,169 @@
           const dueIcon = isOverdue(task.dueDate) ? '⚠️' : (isToday(task.dueDate) ? '📅' : '📆');
           metadataHtml += `<span class="due-date-badge ${dueClass}">${dueIcon} ${formatDueDate(task.dueDate)}</span>`;
         }
+        if (task.recurring) {
+          const recurringIcon = { 'daily': '🔄', 'weekly': '📅', 'monthly': '📆', 'yearly': '🗓️' };
+          metadataHtml += `<span class="recurring-badge">${recurringIcon[task.recurring]} ${task.recurring}</span>`;
+        }
         
         const metadataSection = metadataHtml ? `<div class="task-metadata">${metadataHtml}</div>` : '';
         
         return `
-          <li>
-            <span class="${task.done ? 'done' : ''}" data-index="${index}">
+          <li draggable="true" data-original-index="${originalIndex}">
+            <div class="drag-handle">⋮⋮</div>
+            <span class="${task.done ? 'done' : ''}" data-original-index="${originalIndex}">
               <div class="task-text">${task.text}</div>
               ${noteHtml}
               ${metadataSection}
             </span>
-            <button data-index="${index}">✕</button>
+            <button data-original-index="${originalIndex}">✕</button>
           </li>
         `;
       }).join('');
 
+      // Add drag and drop functionality
+      setupDragAndDrop();
+
       // Add click listeners
       viewListTasks.querySelectorAll('span').forEach(span => {
         span.addEventListener('click', () => {
-          const index = parseInt(span.dataset.index);
-          toggleTaskCompletion(index);
+          const originalIndex = parseInt(span.dataset.originalIndex);
+          toggleTaskCompletion(originalIndex);
         });
       });
 
       viewListTasks.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
-          const index = parseInt(btn.dataset.index);
-          deleteTask(index);
+          const originalIndex = parseInt(btn.dataset.originalIndex);
+          deleteTask(originalIndex);
         });
       });
     }
+
+    // Drag and drop functionality
+    function setupDragAndDrop() {
+      const taskItems = viewListTasks.querySelectorAll('li');
+      
+      taskItems.forEach(item => {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('drop', handleDrop);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('dragenter', handleDragEnter);
+        item.addEventListener('dragleave', handleDragLeave);
+      });
+    }
+
+    let draggedElement = null;
+
+    function handleDragStart(e) {
+      draggedElement = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', this.outerHTML);
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleDragEnter(e) {
+      e.preventDefault();
+      if (this !== draggedElement) {
+        this.classList.add('drag-over');
+      }
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      this.classList.remove('drag-over');
+      
+      if (this !== draggedElement) {
+        const draggedIndex = parseInt(draggedElement.dataset.originalIndex);
+        const targetIndex = parseInt(this.dataset.originalIndex);
+        
+        // Reorder tasks in the actual list
+        const list = todoLists.find(l => l.id === currentListId);
+        if (list) {
+          const draggedTask = list.tasks[draggedIndex];
+          list.tasks.splice(draggedIndex, 1);
+          list.tasks.splice(targetIndex, 0, draggedTask);
+          saveTodoLists();
+          renderViewListTasks();
+        }
+      }
+    }
+
+    function handleDragEnd(e) {
+      this.classList.remove('dragging');
+      draggedElement = null;
+      
+      // Remove drag-over class from all items
+      viewListTasks.querySelectorAll('li').forEach(item => {
+        item.classList.remove('drag-over');
+      });
+    }
+
+    // Recurring task functionality
+    function processRecurringTasks() {
+      const today = new Date().toISOString().split('T')[0];
+      
+      todoLists.forEach(list => {
+        list.tasks.forEach(task => {
+          if (task.recurring && task.done && task.dueDate) {
+            const taskDate = new Date(task.dueDate);
+            const todayDate = new Date(today);
+            
+            // Check if task was completed and is due for renewal
+            if (taskDate <= todayDate) {
+              let nextDueDate = new Date(taskDate);
+              
+              switch (task.recurring) {
+                case 'daily':
+                  nextDueDate.setDate(nextDueDate.getDate() + 1);
+                  break;
+                case 'weekly':
+                  nextDueDate.setDate(nextDueDate.getDate() + 7);
+                  break;
+                case 'monthly':
+                  nextDueDate.setMonth(nextDueDate.getMonth() + 1);
+                  break;
+                case 'yearly':
+                  nextDueDate.setFullYear(nextDueDate.getFullYear() + 1);
+                  break;
+              }
+              
+              // Create new recurring task
+              const newTask = {
+                ...task,
+                done: false,
+                dueDate: nextDueDate.toISOString().split('T')[0],
+                createdAt: new Date().toISOString(),
+                id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+              };
+              
+              list.tasks.push(newTask);
+            }
+          }
+        });
+      });
+      
+      saveTodoLists();
+    }
+
 
     function addTaskToCurrentList() {
       const text = viewListTaskInput.value.trim();
       const note = viewListTaskNote.value.trim();
       const priority = taskPriority.value;
       const dueDate = taskDueDate.value;
+      const recurring = taskRecurring.value;
       
       if (!text) {
         showToast({
@@ -3378,13 +3891,18 @@
       const list = todoLists.find(l => l.id === currentListId);
       if (!list) return;
 
-      list.tasks.push({ 
+      const newTask = {
         text, 
         note, 
         priority, 
-        dueDate, 
-        done: false 
-      });
+        dueDate: dueDate || null,
+        recurring: recurring !== 'none' ? recurring : null,
+        done: false,
+        createdAt: new Date().toISOString(),
+        id: Date.now().toString()
+      };
+      
+      list.tasks.push(newTask);
       saveTodoLists();
       renderViewListTasks();
       renderTodoLists();
@@ -3392,6 +3910,7 @@
       viewListTaskNote.value = "";
       taskPriority.value = "none";
       taskDueDate.value = "";
+      taskRecurring.value = "none";
 
       showToast({
         text: "Task added!",
@@ -3405,14 +3924,48 @@
       const list = todoLists.find(l => l.id === currentListId);
       if (!list) return;
 
-      list.tasks[index].done = !list.tasks[index].done;
+      const task = list.tasks[index];
+      task.done = !task.done;
+      
+      // If completing a recurring task, create the next occurrence
+      if (task.done && task.recurring && task.dueDate) {
+        const taskDate = new Date(task.dueDate);
+        let nextDueDate = new Date(taskDate);
+        
+        switch (task.recurring) {
+          case 'daily':
+            nextDueDate.setDate(nextDueDate.getDate() + 1);
+            break;
+          case 'weekly':
+            nextDueDate.setDate(nextDueDate.getDate() + 7);
+            break;
+          case 'monthly':
+            nextDueDate.setMonth(nextDueDate.getMonth() + 1);
+            break;
+          case 'yearly':
+            nextDueDate.setFullYear(nextDueDate.getFullYear() + 1);
+            break;
+        }
+        
+        // Create new recurring task
+        const newTask = {
+          ...task,
+          done: false,
+          dueDate: nextDueDate.toISOString().split('T')[0],
+          createdAt: new Date().toISOString(),
+          id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+        };
+        
+        list.tasks.push(newTask);
+      }
+      
       saveTodoLists();
       renderViewListTasks();
       renderTodoLists();
 
       showToast({
-        text: list.tasks[index].done ? "Task completed! 🎉" : "Task marked incomplete",
-        type: list.tasks[index].done ? "success" : "info",
+        text: task.done ? "Task completed! 🎉" : "Task marked incomplete",
+        type: task.done ? "success" : "info",
         duration: 2000,
         position: "bottom-right"
       });
@@ -3437,6 +3990,15 @@
     }
 
     viewListAddTaskBtn.onclick = addTaskToCurrentList;
+
+    // Sort controls event listeners
+    taskSortSelect.addEventListener('change', () => {
+      renderViewListTasks();
+    });
+
+    showRecurringToggle.addEventListener('change', () => {
+      renderViewListTasks();
+    });
 
     // Enter key support for both inputs
     viewListTaskInput.addEventListener("keypress", (e) => {
@@ -3567,6 +4129,9 @@
 
     // Initialize to-do lists
     loadTodoLists();
+    
+    // Process recurring tasks after loading lists
+    processRecurringTasks();
 
     /* GLOBAL SEARCH */
     const searchBtn = document.getElementById("searchBtn");
@@ -3579,15 +4144,28 @@
     searchBtn.onclick = () => {
       searchModal.classList.add("active");
       setTimeout(() => searchInput.focus(), 100);
+      updateAdvancedFilters(); // Show correct filters on open
     };
 
     closeSearchBtn.onclick = () => {
       searchModal.classList.remove("active");
       searchInput.value = "";
+      
+      // Reset filters
+      document.querySelector('input[name="searchType"][value="all"]').checked = true;
+      document.getElementById('filterPriority').value = '';
+      document.getElementById('filterDueDate').value = '';
+      document.getElementById('filterCompletion').value = '';
+      document.getElementById('filterListColor').value = '';
+      document.getElementById('filterRecurring').value = '';
+      document.getElementById('filterNoteColor').value = '';
+      document.getElementById('filterCreatedDate').value = '';
+      updateAdvancedFilters();
+      
       searchResults.innerHTML = `
         <div class="search-empty">
           <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
-          <p>Type to search across all tasks and notes</p>
+          <p>Type to search across all tasks, notes, recurring status, and creation dates</p>
         </div>
       `;
     };
@@ -3598,30 +4176,150 @@
       }
     };
 
+    // Filter functions
+    function applyTaskFilters(task, list) {
+      const priorityFilter = document.getElementById('filterPriority').value;
+      const dueDateFilter = document.getElementById('filterDueDate').value;
+      const completionFilter = document.getElementById('filterCompletion').value;
+      const listColorFilter = document.getElementById('filterListColor').value;
+      const recurringFilter = document.getElementById('filterRecurring').value;
+
+      // Priority filter
+      if (priorityFilter && task.priority !== priorityFilter) {
+        return false;
+      }
+
+      // Due date filter
+      if (dueDateFilter) {
+        if (dueDateFilter === 'nodate' && task.dueDate) return false;
+        if (dueDateFilter !== 'nodate' && !task.dueDate) return false;
+        if (dueDateFilter === 'overdue' && !isOverdue(task.dueDate)) return false;
+        if (dueDateFilter === 'today' && !isToday(task.dueDate)) return false;
+        if (dueDateFilter === 'upcoming' && (isOverdue(task.dueDate) || isToday(task.dueDate))) return false;
+      }
+
+      // Completion filter
+      if (completionFilter === 'completed' && !task.done) return false;
+      if (completionFilter === 'incomplete' && task.done) return false;
+
+      // List color filter
+      if (listColorFilter && list.color !== listColorFilter) return false;
+
+      // Recurring filter
+      if (recurringFilter === 'recurring' && !task.recurring) return false;
+      if (recurringFilter === 'non-recurring' && task.recurring) return false;
+
+      return true;
+    }
+
+    function applyNoteFilters(note) {
+      const noteColorFilter = document.getElementById('filterNoteColor').value;
+
+      // Note color filter
+      if (noteColorFilter && note.color !== noteColorFilter) return false;
+
+      return true;
+    }
+
+    function applyCommonFilters(item) {
+      const createdDateFilter = document.getElementById('filterCreatedDate').value;
+      
+      if (createdDateFilter && item.createdAt) {
+        const itemDate = new Date(item.createdAt);
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay());
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        
+        const startOfLastWeek = new Date(startOfWeek);
+        startOfLastWeek.setDate(startOfWeek.getDate() - 7);
+        const endOfLastWeek = new Date(startOfLastWeek);
+        endOfLastWeek.setDate(startOfLastWeek.getDate() + 6);
+        
+        const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+        const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+        
+        switch (createdDateFilter) {
+          case 'today':
+            if (itemDate.toDateString() !== today.toDateString()) return false;
+            break;
+          case 'yesterday':
+            if (itemDate.toDateString() !== yesterday.toDateString()) return false;
+            break;
+          case 'thisweek':
+            if (itemDate < startOfWeek || itemDate > endOfWeek) return false;
+            break;
+          case 'lastweek':
+            if (itemDate < startOfLastWeek || itemDate > endOfLastWeek) return false;
+            break;
+          case 'thismonth':
+            if (itemDate < startOfMonth) return false;
+            break;
+          case 'lastmonth':
+            if (itemDate < startOfLastMonth || itemDate > endOfLastMonth) return false;
+            break;
+        }
+      }
+
+      return true;
+    }
+
     // Search functionality
     function performSearch(query) {
       if (!query || query.trim().length === 0) {
         searchResults.innerHTML = `
           <div class="search-empty">
             <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔍</div>
-            <p>Type to search across all tasks and notes</p>
+            <p>Type to search across all tasks, notes, recurring status, and creation dates</p>
           </div>
         `;
         return;
       }
 
       const searchTerm = query.toLowerCase();
+      const searchType = document.querySelector('input[name="searchType"]:checked').value;
+      
       let taskResults = [];
       let noteResults = [];
 
-      // Search through tasks
+      // Search through tasks if type is 'all' or 'tasks'
+      if (searchType === 'all' || searchType === 'tasks') {
       todoLists.forEach(list => {
         list.tasks.forEach((task, index) => {
           const taskText = task.text.toLowerCase();
           const taskNote = task.note ? task.note.toLowerCase() : "";
+          const recurringText = task.recurring ? task.recurring.toLowerCase() : "";
           
-          if (taskText.includes(searchTerm) || taskNote.includes(searchTerm)) {
-            taskResults.push({
+          // Also search in creation date (formatted)
+          let createdAtText = "";
+          if (task.createdAt) {
+            const createdDate = new Date(task.createdAt);
+            createdAtText = createdDate.toLocaleDateString(undefined, { 
+              month: 'long', 
+              day: 'numeric', 
+              year: 'numeric',
+              weekday: 'long'
+            }).toLowerCase();
+          }
+          
+            if (taskText.includes(searchTerm) || 
+                taskNote.includes(searchTerm) || 
+                recurringText.includes(searchTerm) ||
+                createdAtText.includes(searchTerm)) {
+              
+              // Apply advanced filters
+              let passesFilters = applyTaskFilters(task, list);
+              if (searchType === 'all') {
+                passesFilters = passesFilters && applyCommonFilters(task);
+              }
+              
+              if (passesFilters) {
+                taskResults.push({
               type: 'task',
               listName: list.name,
               listId: list.id,
@@ -3631,27 +4329,43 @@
               note: task.note,
               priority: task.priority,
               dueDate: task.dueDate,
+              recurring: task.recurring,
+              createdAt: task.createdAt,
+              id: task.id,
               done: task.done
-            });
+                });
+              }
+            }
+          });
+        });
+      }
+
+      // Search through notes if type is 'all' or 'notes'
+      if (searchType === 'all' || searchType === 'notes') {
+        notes.forEach(note => {
+          const noteTitle = note.title.toLowerCase();
+          const noteContent = note.content.toLowerCase();
+          
+          if (noteTitle.includes(searchTerm) || noteContent.includes(searchTerm)) {
+            // Apply note filters
+            let passesFilters = applyNoteFilters(note);
+            if (searchType === 'all') {
+              passesFilters = passesFilters && applyCommonFilters(note);
+            }
+            
+            if (passesFilters) {
+              noteResults.push({
+                type: 'note',
+                id: note.id,
+                title: note.title,
+                content: note.content,
+                color: note.color,
+                createdAt: note.createdAt
+              });
+            }
           }
         });
-      });
-
-      // Search through notes
-      notes.forEach(note => {
-        const noteTitle = note.title.toLowerCase();
-        const noteContent = note.content.toLowerCase();
-        
-        if (noteTitle.includes(searchTerm) || noteContent.includes(searchTerm)) {
-          noteResults.push({
-            type: 'note',
-            id: note.id,
-            title: note.title,
-            content: note.content,
-            color: note.color
-          });
-        }
-      });
+      }
 
       // Display results
       if (taskResults.length === 0 && noteResults.length === 0) {
@@ -3684,8 +4398,29 @@
               if (result.dueDate) {
                 const dueClass = isOverdue(result.dueDate) ? 'overdue' : (isToday(result.dueDate) ? 'today' : '');
                 const dueIcon = isOverdue(result.dueDate) ? '⚠️' : (isToday(result.dueDate) ? '📅' : '📆');
-                metadataHtml += `<span class="due-date-badge ${dueClass}">${dueIcon} ${formatDueDate(result.dueDate)}</span>`;
+                metadataHtml += `<span class="due-date-badge ${dueClass}">${dueIcon} ${formatDueDate(result.dueDate)}</span> `;
               }
+              if (result.recurring) {
+                const recurringIcon = { 'daily': '🔄', 'weekly': '📅', 'monthly': '📆', 'yearly': '🗓️' };
+                metadataHtml += `<span class="recurring-badge">${recurringIcon[result.recurring]} ${result.recurring}</span> `;
+              }
+              
+              // Format creation date
+              let createdDateHtml = '';
+              if (result.createdAt) {
+                const createdDate = new Date(result.createdAt);
+                const formattedDate = createdDate.toLocaleDateString(undefined, { 
+                  month: 'short', 
+                  day: 'numeric', 
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                });
+                createdDateHtml = `<div class="search-result-meta">Created: ${formattedDate}</div>`;
+              }
+              
+              // Add task ID for reference (subtle)
+              const taskIdHtml = result.id ? `<div class="search-result-meta" style="font-size: 0.7rem; opacity: 0.3;">ID: ${result.id.substring(0, 8)}...</div>` : '';
               
               return `
                 <div class="search-result-item task" data-type="task" data-list-id="${result.listId}">
@@ -3694,6 +4429,8 @@
                   ${highlightedNote ? `<div class="search-result-content" ${doneClass}>${highlightedNote}</div>` : ''}
                   ${metadataHtml ? `<div class="task-metadata" style="margin-top: 0.5rem;">${metadataHtml}</div>` : ''}
                   <div class="search-result-meta">From list: ${result.listName}</div>
+                  ${createdDateHtml}
+                  ${taskIdHtml}
                 </div>
               `;
             }).join('')}
@@ -3770,6 +4507,60 @@
     searchInput.addEventListener("input", (e) => {
       performSearch(e.target.value);
     });
+
+    // Filter event listeners
+    document.querySelectorAll('input[name="searchType"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        updateAdvancedFilters();
+        performSearch(searchInput.value);
+      });
+    });
+
+    // Advanced filter listeners
+    document.getElementById('filterPriority').addEventListener('change', () => {
+      performSearch(searchInput.value);
+    });
+    document.getElementById('filterDueDate').addEventListener('change', () => {
+      performSearch(searchInput.value);
+    });
+    document.getElementById('filterCompletion').addEventListener('change', () => {
+      performSearch(searchInput.value);
+    });
+    document.getElementById('filterListColor').addEventListener('change', () => {
+      performSearch(searchInput.value);
+    });
+    document.getElementById('filterRecurring').addEventListener('change', () => {
+      performSearch(searchInput.value);
+    });
+    document.getElementById('filterNoteColor').addEventListener('change', () => {
+      performSearch(searchInput.value);
+    });
+    document.getElementById('filterCreatedDate').addEventListener('change', () => {
+      performSearch(searchInput.value);
+    });
+
+    // Function to show/hide advanced filters based on search type
+    function updateAdvancedFilters() {
+      const searchType = document.querySelector('input[name="searchType"]:checked').value;
+      const taskFilters = document.getElementById('taskFilters');
+      const noteFilters = document.getElementById('noteFilters');
+      const commonFilters = document.getElementById('commonFilters');
+      
+      if (searchType === 'tasks') {
+        taskFilters.style.display = 'flex';
+        noteFilters.style.display = 'none';
+        commonFilters.style.display = 'none';
+      } else if (searchType === 'notes') {
+        taskFilters.style.display = 'none';
+        noteFilters.style.display = 'flex';
+        commonFilters.style.display = 'none';
+      } else {
+        // For 'All' type, show only common filters
+        taskFilters.style.display = 'none';
+        noteFilters.style.display = 'none';
+        commonFilters.style.display = 'flex';
+      }
+    }
 
     /* SETTINGS */
     const settingsBtn = document.getElementById("settingsBtn");
