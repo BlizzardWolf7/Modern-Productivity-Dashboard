@@ -1,6 +1,6 @@
 # 🚀 Modern Productivity Dashboard
 
-A beautiful, modern, and feature-rich productivity dashboard built with pure HTML, CSS, and vanilla JavaScript. This single-page application helps you stay organized with real-time information, task management, and full customization options.
+A beautiful, modern, and feature-rich productivity dashboard built with pure HTML, CSS, and vanilla JavaScript. This application features a **modular code structure** with separate files for better organization and maintainability. Helps you stay organized with real-time information, task management, time tracking, and full customization options.
 
 ![Dashboard Preview](https://img.shields.io/badge/Status-Active-success)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
@@ -22,15 +22,28 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 - Live updating time display
 - Beautiful gradient text styling
 - Formatted for easy readability
+- **Time Tracking integration** - Access stopwatch, timer, and alarms
+
+### ⏱️ **Time Tracking**
+- **Stopwatch** - Track elapsed time with start, pause, and reset controls
+- **Timer** - Set custom countdown with hours, minutes, and seconds
+- **Alarms** - Set one-time and recurring alarms with custom labels and day selection
+- **Session history** - View your last 20 time tracking sessions
+- **Notifications** - Browser and audio notifications when timers/alarms complete
+- **Automatic persistence** - Sessions saved to localStorage
+- Access via ⏱️ button on the Current Time card
 
 ### 🌤️ **Weather Integration**
 - Real-time weather data using Open-Meteo API (no API key required)
 - **Location detection** with city and country display
-- **Current weather** - Temperature, humidity, and conditions
+- **Current weather** - Temperature, humidity, wind speed, and conditions
 - **Weather conditions** - Visual icons (sunny, rainy, snowy, cloudy, etc.)
 - **30+ weather conditions** - Accurate representation with emoji icons
 - **7-day forecast** - Detailed weather predictions
 - **Forecast details** - Daily high/low temps and precipitation
+- **Hourly weather forecast** - Click any forecast day to see 24-hour weather breakdown
+- **Hourly details** - Temperature, humidity, wind speed, and precipitation for each hour
+- **24-hour time format** - Uses 24-hour format for hourly weather display
 - **Weather modal** - Beautiful detailed view with full forecast
 - Automatic geolocation support
 - Styled location badge with pin emoji
@@ -140,9 +153,10 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 ## 🛠️ Technologies Used
 
 ### Core Technologies
-- **HTML5** - Semantic markup structure
-- **CSS3** - Modern styling with CSS custom properties
-- **Vanilla JavaScript** - No frameworks, pure ES6+
+- **HTML5** - Semantic markup structure in `index.html`
+- **CSS3** - Modern styling with CSS custom properties in `style.css`
+- **Vanilla JavaScript** - No frameworks, pure ES6+ in `script.js`
+- **Modular architecture** - Separate HTML, CSS, and JS files for better code organization
 
 ### External APIs
 - **[Open-Meteo API](https://open-meteo.com/)** - Free weather data (no API key required)
@@ -168,6 +182,7 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
 
 2. **Open the file**:
    - Simply open `index.html` in your web browser
+   - Make sure `style.css` and `script.js` are in the same directory
    - No build process or dependencies to install!
 
 3. **Install as PWA** (Optional):
@@ -177,13 +192,15 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
    - Access offline with cached content
 
 ### Alternative: Direct Download
-- Download `index.html` as a standalone file
-- Double-click to open in your default browser
+- Download all project files (`index.html`, `style.css`, `script.js`)
+- Keep all files in the same directory
+- Open `index.html` in your browser
 
 ### Requirements
 - Modern web browser (Chrome 60+, Firefox 55+, Safari 12+, Edge 79+)
 - Internet connection (for weather data and external libraries)
 - For PWA features: HTTPS hosting or localhost
+- For notification features: Browser notification permissions (optional)
 
 ---
 
@@ -221,6 +238,58 @@ A beautiful, modern, and feature-rich productivity dashboard built with pure HTM
    - Dashboard shows tasks due today count (yellow)
    - Lists with urgent tasks are highlighted (red for overdue, yellow for due today)
    - Set due dates when creating tasks to enable deadline tracking
+
+### Using Time Tracking
+
+Access time tracking features via the ⏱️ button on the Current Time card:
+
+#### Stopwatch
+1. Click "⏱️ Time Tracking" on the Current Time card
+2. Select the "Stopwatch" tab
+3. Click "Start" to begin tracking time
+4. Click "Pause" to pause the stopwatch
+5. Click "Reset" to reset the timer (saves session automatically)
+6. View your session history at the bottom
+
+#### Timer
+1. Open Time Tracking modal
+2. Select the "Timer" tab
+3. Set hours, minutes, and seconds (default: 5 minutes)
+4. Click "Start" to begin countdown
+5. Click "Pause" to pause
+6. Click "Reset" to reset to your set duration
+7. **Automatic notifications** when timer completes:
+   - Browser notification (if enabled)
+   - Sound notification (if enabled)
+   - Toast message
+8. Completed sessions saved automatically
+
+#### Alarms
+1. Open Time Tracking modal
+2. Select the "Alarm" tab
+3. Set the alarm time using the time picker
+4. Add an optional label (e.g., "Morning Alarm")
+5. Select days to repeat:
+   - Choose specific days (Mon-Fri for work alarms, etc.)
+   - Or select all days for daily alarms
+   - Leave empty for one-time alarms
+6. Click "Add Alarm"
+7. Manage alarms:
+   - Toggle ON/OFF to enable/disable without deleting
+   - Click "Delete" to permanently remove an alarm
+8. **Notifications** when alarm triggers:
+   - Browser notification (if enabled)
+   - Sound notification (if enabled)
+   - Toast message with alarm label
+
+**Session History:**
+- View your last 20 time tracking sessions
+- Sessions show:
+  - Duration tracked
+  - Date and time
+  - Type (Stopwatch or Timer)
+- Automatically saved to localStorage
+- Oldest sessions automatically removed (keeps last 20)
 
 ### Using the Multi-List To-Do System
 
@@ -345,6 +414,19 @@ The dashboard automatically:
    - High and low temperatures
    - Precipitation amounts (if any)
    - Day names (Today, Mon, Tue, etc.)
+   - **Click any day** to view 24-hour weather breakdown
+
+**Hourly Weather View:**
+- Click any forecast day card to open hourly details
+- View hour-by-hour weather for the entire day
+- 24-hour time format (00:00 - 23:00)
+- Hourly information includes:
+  - Temperature
+  - Weather conditions with emoji icons
+  - Humidity percentage
+  - Wind speed
+  - Precipitation (if any)
+- Perfect for planning outdoor activities
 
 **Weather Conditions:**
 The app recognizes 30+ weather conditions including:
@@ -446,6 +528,13 @@ The settings panel is now organized into collapsible sections for better navigat
 - Dark mode toggle
 - Greeting visibility toggle
 
+#### 🔔 **Notifications**
+- Enable/disable browser notifications
+- Enable/disable notification sounds
+- Browser notifications show when timers complete or alarms trigger
+- Sound notifications play alert audio for timer/alarm completions
+- App will request notification permission on first load
+
 #### 🌐 **Connection**
 - Real-time connection status indicator (Online/Offline)
 - Clear App Cache button
@@ -522,9 +611,11 @@ The card will automatically inherit the styling and animations.
 ```
 simple-dashboard/
 │
-├── index.html          # Main application file (complete dashboard)
+├── index.html          # Main HTML structure
+├── style.css           # All CSS styling and animations
+├── script.js           # All JavaScript functionality
 ├── manifest.json       # PWA manifest configuration
-├── sw.js              # Service Worker for offline support
+├── sw.js               # Service Worker for offline support
 ├── icons/             # PWA icons for all platforms
 │   ├── android/       # Android launcher icons
 │   ├── ios/           # iOS app icons
@@ -534,28 +625,36 @@ simple-dashboard/
 
 ### Code Organization
 
-The `index.html` file is organized into:
+The project uses a **modular structure** with separate files:
 
-1. **Head Section**
+1. **`index.html`** - Main HTML structure
    - Meta tags and title
-   - External CSS (Toast library)
-   - Internal CSS styles
-   - CSS animations and keyframes
+   - Links to external CSS/JS libraries
+   - Dashboard layout and modals
+   - All HTML content
 
-2. **Body Section**
-   - Settings button
-   - Dashboard title and greeting
-   - Cards container (Clock, Weather, To-Do)
-   - Footer with links
-   - Settings modal
+2. **`style.css`** - All styling and animations
+   - CSS custom properties for theming
+   - Gradient backgrounds and glassmorphism
+   - Animations and keyframes
+   - Responsive design rules
+   - Dark mode styles
 
-3. **Scripts**
-   - External JS (Toast library)
+3. **`script.js`** - All functionality
    - Clock functionality
    - Weather and location API calls
    - To-do list logic
+   - Notes system
    - Settings management
+   - Time tracking features
+   - Search functionality
    - Toast notification triggers
+   - Service worker registration
+
+4. **`sw.js`** - Service Worker
+   - Offline caching
+   - Update detection
+   - Background sync capabilities
 
 ---
 
@@ -698,6 +797,67 @@ The dashboard stores data in browser localStorage:
 
 **Note Colors**: `yellow`, `pink`, `blue`, `green`, `purple`, `orange`
 
+#### Time Tracking Sessions Array
+```javascript
+[
+  {
+    "type": "Stopwatch",
+    "duration": 1800,
+    "timestamp": "2025-01-15T10:30:00.000Z",
+    "date": "1/15/2025",
+    "time": "10:30:00 AM"
+  },
+  {
+    "type": "Timer",
+    "duration": 300,
+    "timestamp": "2025-01-15T11:45:00.000Z",
+    "date": "1/15/2025",
+    "time": "11:45:00 AM"
+  }
+]
+```
+**Key**: `"timeTrackingSessions"`
+
+- Stores last 20 sessions automatically
+- Session properties:
+  - `type` - "Stopwatch" or "Timer"
+  - `duration` - Duration in seconds
+  - `timestamp` - ISO timestamp
+  - `date` - Local date string
+  - `time` - Local time string
+
+#### Time Tracking Alarms Array
+```javascript
+[
+  {
+    "id": 1705315200000,
+    "time": "09:00",
+    "label": "Morning Alarm",
+    "days": [1, 2, 3, 4, 5],
+    "enabled": true,
+    "createdAt": "2025-01-15T08:00:00.000Z"
+  }
+]
+```
+**Key**: `"timeTrackingAlarms"`
+
+- Alarm properties:
+  - `id` - Unique alarm ID (timestamp)
+  - `time` - Alarm time in HH:MM format
+  - `label` - Optional alarm label
+  - `days` - Array of day numbers (0=Sunday, 6=Saturday)
+  - `enabled` - Whether alarm is active
+  - `createdAt` - Creation timestamp
+
+- Day numbers:
+  - `0` - Sunday
+  - `1` - Monday
+  - `2` - Tuesday
+  - `3` - Wednesday
+  - `4` - Thursday
+  - `5` - Friday
+  - `6` - Saturday
+
 ### Clearing Data
 
 To reset the dashboard:
@@ -750,10 +910,15 @@ To reset the dashboard:
 | Settings Saved | Success | "Settings saved successfully!" | 3000ms |
 | Weather Error | Error | "Unable to fetch weather data" | 4000ms |
 | Location Denied | Warning | "Location access denied..." | 5000ms |
+| Timer Complete | Success | "⏰ Timer finished!" | 5000ms |
+| Alarm Triggered | Success | "🔔 [alarm label] - [time]" | 10000ms |
+| Alarm Added | Success | "Alarm added successfully!" | 2000ms |
+| Alarm Deleted | Info | "Alarm deleted" | 2000ms |
+| Alarm Toggled | Info | "Alarm [enabled/disabled]" | 2000ms |
 
 ### Toast Positions
-- **Top-right**: Settings, Welcome
-- **Bottom-right**: Tasks, Weather, Location
+- **Top-right**: Settings, Welcome, Cache management
+- **Bottom-right**: Tasks, Weather, Location, Time Tracking
 
 ---
 
@@ -874,7 +1039,7 @@ Dark mode adjusts:
 The update system uses a multi-step process:
 
 1. **Service Worker Versioning** (`sw.js`):
-   - Each version has a unique cache name (e.g., `productivity-dashboard-v1.0.9`)
+   - Each version has a unique cache name (e.g., `productivity-dashboard-v1.1.0`)
    - When you update your code, you change the version number in `sw.js`
 
 2. **Periodic Checks**:
@@ -914,7 +1079,7 @@ The update system uses a multi-step process:
 1. Open settings (⚙️ icon in top-right)
 2. Expand the "Guide & About" section (📖)
 3. View app details:
-   - **Version**: Current app version (v1.0.9)
+   - **Version**: Current app version (v1.1.0)
    - **Last Updated**: Date of last app update
    - **Last Checked**: When the app last checked for updates
 

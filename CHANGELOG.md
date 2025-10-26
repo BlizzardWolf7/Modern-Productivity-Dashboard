@@ -7,7 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.9] - Current
+## [1.1.0] - Current
+
+### ✨ Added
+- Time Tracking feature with comprehensive stopwatch and timer functionality
+- Time Tracking button (⏱️) added to the Current Time card
+- Dedicated Time Tracking modal with tabbed interface
+- Stopwatch functionality with start, pause, and reset controls
+- Timer functionality with customizable hours, minutes, and seconds
+- Timer countdown with automatic completion notifications
+- Alarm functionality with one-time and recurring alarms
+- Alarm tab in Time Tracking modal with time picker and day selection
+- Hourly weather forecast feature for detailed day-by-day weather analysis
+- Clickable forecast days to view 24-hour weather breakdown
+- 24-hour time format for hourly weather display
+- Modular code structure with separate CSS (style.css) and JavaScript (script.js) files
+
+### 🔧 Enhanced
+- Time card now includes interactive Time Tracking functionality
+- Modal interface with consistent design language matching dashboard theme
+- Time display formatting with proper zero-padding (HH:MM:SS)
+- Session management with automatic cleanup (keeps last 20 sessions)
+- Timer input validation and real-time display updates
+- Keyboard support for modal closing (Escape key)
+- Weather forecast now includes hourly data API integration
+- Forecast day cards are now interactive with hover effects
+- Alarm system integrates with existing notification settings
+- Time Tracking modal tabs properly styled for three-tab layout
+- Service worker caching strategy updated to include separate CSS and JS files
+
+### 🚀 Improved
+- Productivity tracking capabilities with time measurement tools
+- User experience with intuitive time tracking interface
+- Data persistence with localStorage integration
+- Visual feedback with color-coded control buttons
+- Session history for productivity analysis
+- Timer notifications using existing toast system
+- Weather information more detailed with hour-by-hour breakdown
+- Alarm management with enable/disable and delete functionality
+- Code organization with separation of concerns (HTML, CSS, JS)
+- Better caching performance with explicit file references in service worker
+
+---
+
+## [1.0.9]
 
 ### ✨ Added
 - Advanced task sorting system with multiple options

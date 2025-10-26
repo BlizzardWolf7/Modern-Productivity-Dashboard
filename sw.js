@@ -1,14 +1,18 @@
 // Service Worker for Productivity Dashboard
-// Version 1.0.8
+// Version 1.1.0
 
-const CACHE_NAME = 'productivity-dashboard-v1.0.9';
+const CACHE_NAME = 'productivity-dashboard-v1.1.0';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/style.css',
+  '/script.js',
   './',
   './index.html',
   './manifest.json',
+  './style.css',
+  './script.js',
   'https://cdn.jsdelivr.net/gh/BlizzardWolf7/Toast-Notification-Library@main/toast.css',
   'https://cdn.jsdelivr.net/gh/BlizzardWolf7/Toast-Notification-Library@main/toast.js'
 ];
